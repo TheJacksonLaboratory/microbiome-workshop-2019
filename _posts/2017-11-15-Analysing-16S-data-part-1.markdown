@@ -44,7 +44,7 @@ nano 16s_pipeline.sh
  
 Opening a new text file you should see something similar to this: 
 
-![Nano](/images/NanoExample.png)
+![Nano]({% {{ site.baseurl }} %}/images/NanoExample.png)
  
 > Try writing some text to the document 16s_pipeline.sh<br>
 > Try saving the document, closing it, and re-opening it.
