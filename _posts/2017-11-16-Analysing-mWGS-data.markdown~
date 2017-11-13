@@ -1,0 +1,490 @@
+---
+layout: post
+title:  "Analysing mWGS data"
+date:   2017-11-16 06:00:00
+categories: jekyll update
+---
+
+## Session Overview
+
+During this session we will cover the fundamentals of analysing metagenomic Whole Genome Shotgun
+(mWGS) sequence data.
+
+&nbsp;&nbsp;[1. An Introduction to mWGS Sequence Data](#header1) <br>
+&nbsp;&nbsp;[2. Estimating Bacterial Abundance from mWGS Data](#header2) <br>
+&nbsp;&nbsp;[2. Estimating Metabolic Pathway Abundance from mWGS Data](#header3) <br>
+&nbsp;&nbsp;[4. Searching for Genes with Interesting Function in mWGS Data](#header4) <br>
+&nbsp;&nbsp;[5. Visualizing Functional Analysis Output with R](#header5) <br>
+
+&nbsp;&nbsp;[Conclusions](#header6) <br>
+
+<br>
+<br>
+<br>
+
+
+## Session Three
+----------------------------------
+# 1. An Introduction to mWGS Sequence Data<a name="header1"></a>
+
+Similar to 16S analysis, the most common format in which to generate mWGS sequence data is fastq.
+For simplicity we will be working with single-end sequence data in this session, meaning there 
+will only be one fastq file for each sample in our study. Navigate to the session directory
+and look at the sequence data that will be used in this session.
+
+{% highlight bash %}
+cd ~/MCA/mWGS/       # the parent directory
+cd fastqs            # the working directory containing our sequence data
+ls
+
+# Have a look at the first read in one of the fastq files
+head -4 MET0109.subsample.fastq
+
+@D0M0RACXX:7:2205:11381:62949/1
+GCCAATCACCGTTACGAAATCGCCGTCTTTGAGATGGAGGCTGAGGTTTCGCAGGGCTCGTTTTTCGTTGACCGTGCCGGGGAAGAAGGTTTTTGAAATGG
++
+CCCFFFFFHHHHHJJJJJJJJJIJIHHJJIIGIIHJJEHIIJJGJIHEHHGIHHFFFECD>BDDDD@DCCDDDD9<BDDDDD992<?CDCCCBBDBDC>C:
+{% endhighlight %}
+
+Differences in the way that 16S and mWGS sequences are generated mean it is necesary to process the
+data differently. In particular, 16S analysis makes use of PCR primers that target and amplify the
+(bacterial) 16S gene. Only the 16S rRNA gene is sequenced, and it is safe to assume that all the
+sequence reads in our fastq files are bacterial in origin. 
+
+In contrast, mWGS sequencing uses random primers to target and amplify all regions of the 
+metagenome. If there is non-bacterial DNA present in a sample (e.g. from the host), then it too will
+be targeted. Removal of host DNA contamination is an important step in processing mWGS data,
+particularly when limited amounts of DNA are available for sequencing. As this is a computationally
+demanding process, we will begin by assuming that host DNA has already been removed from our
+sequence data. 
+
+<br>
+<br>
+
+----------------------------------
+# 2. Estimating Bacterial Abundance from mWGS Data<a name="header2"></a>
+
+As with 16S data, mWGS sequence data can be used to quantify the relative abundance of different
+bacterial taxa in microbiome samples. However, differences in the way these data are generated mean
+that they must be processed differently. Each approach has its strengths and weaknesses. 
+
+For example, two bacteria may be taxonomically (and functionally) different, but if this difference
+is not reflected in their 16S rRNA gene sequences, then 16S analysis will not be sufficient to tell
+them apart. 
+
+In contrast, mWGS sequencing can cover entire bacterial genomes and therefore has greater potential
+to distinguish closely related taxa. However, determining which mWGS sequences belong to which
+genomes is both complicated and computationally demanding, particularly when closely related taxa
+share large amounts of orthlogous sequence. Additionally, the random nature of mWGS sequencing means
+that coverage of different bacterial genomes may not be even. The genomes of some bacteria
+\- particularly those present at low relative abundance - may only be partly represented. 
+
+The most common approach for quantifying bacteria from mWGS data involves mapping reads to databases
+of reference genes or genomes. Relative abundance of a single taxon can then be compared across
+samples by i) counting the number of reads mapped to its reference sequence within each sample and
+ii) normalizing counts to account for differences in sequencing effort (i.e. total number of reads 
+generated) for each sample. Similarly, relative abundance of two different taxa can be compared
+within a sample by i) counting the number of reads mapped to each reference sequence and
+ii) normalizing to account for differences in reference sequence length. Typically data 
+normalization is carried out to enable comparison of taxon abundance between and within samples. The
+result is that read counts are reported as fragments (i.e. reads) per kilo-base, per million reads, 
+or FPKM.
+
+<br>
+
+#### 2.b. Quantifying Bacterial Abundance with Metaphlan2<a name="header2b"></a>
+
+One tool that can convert mWGS data into taxon abundance estimates is
+[Metaphlan2][metaphlan2-homepage]. Metaphlan2 avoids the issue of dealing with reads that map to
+homologous sequence by curating a set of unique clade-specific marker genes that distinguish
+different bacterial taxa. mWGS reads are first mapped to this reference geneset, then normalized. 
+
+Try running Metaphlan2 for a single sample. 
+
+
+{% highlight bash %}
+# Make sure you are in the working directory for this session. 
+cd ~/MCA/mWGS/
+pwd
+
+# Run Metaphlan2, providing a single sample as input
+metaphlan2.py fastqs/MET0109.subsample.fastq --input_type fastq >  MET0109_metagenome_profile.tsv
+
+# Have a look at the principal output of Metaphlan2
+less MET0109_metagenome_profile.tsv
+
+# Once you are familiar with the content of this file, you can delete it
+rm MET0109_metagenome_profile.tsv
+{% endhighlight %}
+
+> What do the two columns in Metaphlan2 output represent? <br>
+> What do the data in the second Metaphlan2 output file (`MET0109.subsample.fastq.bowtie2out.txt`)
+> represent?
+
+For additional information on Metaphlan2, including an explanation of output files, see this 
+[online tutorial][metaphlan2-tutorial]
+
+<br>
+
+#### 2.c. Running Metaphlan2 with Pre-Mapped Fastq Files<a name="header2c"></a>
+
+Metaphlan2 performs two steps. The first maps reads to the reference gene set using the mapping tool
+[bowtie2][bowtie2-home]. The second counts the number of reads mapping to each clade-specific
+marker, performs normalization, and outputs a percent estimation for each taxon abundance. 
+
+It would be possible to run both steps sequentially for every fastq file in `fastqs`.
+
+{% highlight bash %}
+        ### Example code only, do not run during this session ### 
+
+# make a directory in which to store the two Metaphlan2 output files
+mkdir metaphlan2_profiles
+mkdir metaphlan2_mapped
+
+# Run Metaphlan2 sequentially on all fastq files in ./fastqs
+for FASTQ in fastqs/*fastq
+do
+  # capture the file prefix, which corresponds to the sample name
+  SAMPLEID="$(basename ${FASTQ%.subsample.fastq})"
+  # run Metaphlan2
+  metaphlan2.py $FASTQ \
+    --input_type fastq \
+    --output_file metaphlan2_profiles/${SAMPLEID}_metagenome_profile.tsv
+    --bowtie2out metaphlan2_mapped/${SAMPLEID}_bowtie2out.txt
+    --nproc 4
+  # Print a helpful message after each completed Metaphlan2 run
+  echo Completed Metaphlan2 for $SAMPLEID on `date`
+done
+{% endhighlight %}
+
+However, running the above code is time consuming, even when using `--nproc 4` to run on multiple
+cores. You will therefore find the pre-computed output of the first step already in the directory
+`./fastqs_metaphlan2_mapped`. It is then possible to run the second step independently. 
+
+{% highlight bash %}
+# make a directory in which to store the Metaphlan2 output file
+mkdir metaphlan2_profiles
+
+# Run Metaphlan2 sequentially on the output of the bowtie2 mapping step
+for MAPFILE in metaphlan2_mapped/*bowtie2out.txt
+do
+  # capture the file prefix, which corresponds to the sample name
+  SAMPLEID="$(basename ${MAPFILE%._bowtie2out.txt})"
+  # run Metaphlan2
+  metaphlan2.py $MAPFILE \
+    --input_type bowtie2out \
+    --output_file metaphlan2_profiles/${SAMPLEID}_metagenome_profile.tsv \
+    --nproc 4
+done
+{% endhighlight %}
+
+<br>
+
+Finally, Metaphlan2 also provides a python script that can be used to merge data for different
+samples into a single count matrix.
+
+{% highlight bash %}
+# python script for combining Metaphlan2 output
+which merge_metaphlan_tables.py 
+
+# run this python script to generae a single count matrix
+merge_metaphlan_tables.py \
+  metaphlan2_profiles/*_metagenome_profile.tsv \
+  > metaphlan2_counts.tsv			  
+{% endhighlight %}
+
+<br>
+
+> Have a look at the merged count file. What do the first two lines in the file mean? <br>
+> Which taxonomic level(s) are reported in this file? 
+
+By default Metaphlan2 outputs relative abundance estimates for all taxonomic levels to the same
+file. While this is useful for some downstream analyses, others may require information for only
+one taxonomic level at a time. Running the above code, but with the `--tax_level g` argument will 
+cause Metaphlan2 to only report genera abundance estimates. The resulting count matrix will then
+be comparable to the OTU count matrix generated during 16S sequence analysis. 
+
+Rather than re-run Metaphlan2, we will use the command line tool awk to extract genera counts from
+our existing count matrix.
+
+
+{% highlight bash %}
+# some command line magic to extract genus counts
+cat metaphlan2_counts.tsv | awk '$1 ~ /g__[A-Za-z]*/'  > metaphlan2_genera_counts.tsv
+{% endhighlight %}
+
+
+
+> Aside from the taxonomic level reported, what other important differences exist between an
+> OTU table and a Metaphlan2 genus abundance table?
+
+#### 2.d. Visualizing Metaphlan2 Taxonomic Abundance<a name="header2d"></a>
+
+Metaphlan2 output can be visualized in a variety of ways. One is via the metagenome visualization
+tool [Krona][krona-home]. Metaphlan2 provides a convenience script for converting output into the
+format required by Krona.
+
+{% highlight bash %}
+mkdir metaphlan2_krona
+
+# Run Metaphlan2 sequentially on the output of the bowtie2 mapping step
+for PROFILE in metaphlan2_profiles/*_metagenome_profile.tsv
+do
+  # capture the file prefix, which corresponds to the sample name
+  SAMPLEID="$(basename ${PROFILE%._metagenome_profile.tsv})"
+  # run script to convert profile to format required by Krona
+  metaphlan2krona.py --profile $PROFILE --krona metaphlan2_krona/${SAMPLIEID}_krona_file.tsv
+  # run Krona to generate interactive html file
+  ktImportText metaphlan2_krona/${SAMPLIEID}_krona_file.tsv \
+    -o  metaphlan2_krona/${SAMPLIEID}_krona_file.html
+done
+{% endhighlight %}
+
+> Using your web browser navigate to the html files created by Krona. Have a look at the taxonomic
+> composition of some of your samples.
+
+<br>
+<br>
+
+----------------------------------
+# 3. Estimating Metabolic Pathway Abundance from mWGS Data<a name="header3"></a>
+
+While both 16S and mWGS data can be used to estimate the relative abundance of different microbial
+taxa, mWGS data can also provide insight into the metabolic potential of the microbiome. This can 
+be done by mapping mWGS reads to databases containing genes with known metabolic function. 
+
+The developers of Metaphlan2 provide a second tool [HUMAnN2][humann2-home]. Similar to Metaphlan2, 
+HUMAnN2 maps mWGS reads to a reference database; however this reference database was generated by
+i) taking all bacterial genes present in the [NCBI][ncbi-reference] reference database,
+ii) clustering genes based on their sequence similarity, and iii) inferring the metabolic function
+of each gene cluster by comparing it to genes in the [UniRef][uniref-home] reference database. 
+
+The HUMAnN2 referece database is large - too large to be installed on the cloud instance used for
+this practical session. Instead the output for a HUMAnN2 run is provided in the sub-directory
+`./humann2_output`. It would be possible to generate these output files for every file in `fastqs`.
+
+{% highlight bash %}
+mkdir humann2_output
+
+# First convert fastq files to fasta format for use with HUMAnN2
+for FASTQ in fastqs/*fastq
+do
+  # capture the file prefix, which corresponds to the sample name
+  SAMPLEID="${FASTQ%.fastq}"
+  # run fastq_to_fasta
+  fastq_to_fasta -i $FASTQ -o $SAMPLEID.fasta
+done
+
+# run HUMAnN2 
+for FASTA in *fasta  
+do
+  # The capture the file prefix
+  SAMPLEID="$(basename ${FASTA%.fasta})"
+   humann2 \
+    --input $FASTA \
+    --output humann2_output \
+    --nucleotide-database /path/to/humann2/nucleotide/database \
+    --protein-database /path/to/humann2/protein/database \
+   &> $SAMPLEID.log
+   echo Completed HUMAnN2 run for sample $SAMPLEID
+done
+{% endhighlight %}
+
+In order to improve the chance of finding a match, HUMAnN2 maps each read first to a database
+of nucleotide sequences, then to a database of protein sequences. It outputs a variety of files
+into a specified subdirectory.
+
+> Navigate to the output directory for a single HUMAnN2 run. Have a look at the different files
+> in this directory. <br>
+> In particular have a look at the three files with the suffixes `_genefamilies.tsv`, 
+> `_pathabundance/tsv`, and `_pathcoverage.tsv`
+
+{% highlight bash %}
+cd humann2_output/MET0109_dir
+# A table of gene abundance
+head MET0109_genefamilies.tsv
+
+# A table of pathway abundance
+head MET0109_pathabundance.tsv
+
+# A table of pathway coverage
+head MET0109_pathcoverage.tsv
+{% endhighlight %}
+ 
+HUMAnN2 outputs a count of the number of reads mapping to each gene in its reference database to the
+file ending `_genefamilies.tsv`. However, genes alone are not particularly informative, therefore
+HUMAnN2 also combines information from all the genes that contribute to a single metabolic pathway
+and provides an outputs an estimate of pathway abundance to the file ending `_pathabundance.tsv`.
+Finally, HUMAnN2 also outputs a confidence estimation of whether a particular metabolic pathway is
+detected in a sample to the file ending `_pathcoverage.tsv`. For a detailed explanation of these
+files, including how HUMAnN2 calculates pathway abundances from constituent gene abundances, see
+[here][humann2-path]. For a detailed descriptoin of the metabolic pathways used by HUMAnN2, see
+[here][metacyc-home].
+
+Having created estimates of gene and pathway abundance for each sample, it is necessary to i)
+normalize data to account for differences in sequencing effort and gene/pathway size, and ii) 
+merge normalized data into a single count matrix.
+
+
+{% highlight bash %}
+# Navigate back to the working directory
+cd ~/MCA/mWGS/
+
+# Normalize counts for each sample
+for FILE in humann2_output/*pathabundance.tsv
+do
+  SAMPLEID="${FILE}%.tsv"
+  # Run HUMANn2 to normalize counts to 'counts per million reads mapped'
+  humann2_renorm_table --input $FILE --output ${SAMPLEID}_cpm.tsv --units cpm
+done
+
+# combine the gene counts
+humann2_join_tables \
+  --input humann2_output \
+  --output humann2_genefamilies_cpm.tsv \
+  --file_name _pathabundance_cpm
+{% endhighlight %}
+
+> Have a look at the resulting merged file. <br>
+> Try normalizing and merging the files containing HUMAnN2 gene abundance and/or path coverage
+> estimates.
+
+As mentioned, HUMAnN2 clusters NCBI genes based on sequence similarity before it annotates them
+with a particular metabolic function. It is therefore able to provide an abundance estimate for
+each every gene within a cluster, as well as for the cluster itself. Within the output file, 
+you will see that some rows are labelled first by the cluster id, followed by a pipe `|`, followed
+by the taxonomy (genus.species) of the contriuting gene. Other rows are just labelled by the cluster
+id. The latter contain abundance estimates for that gene/pathway cluster. 
+
+To simplify downstream analysis, extract the abundane estimates for each gene cluster and discard
+the abundance estimates for individual genes.
+
+{% highlight bash %}
+# Use grep to selectively remove individual gene counts from HUMAnN2 output
+cat humann2_genefamilies_cpm.tsv | grep -v "|g__" | grep -v "|unknown" > humann2_genefamilies_filtered.tsv
+{% endhighlight %}
+
+<br>
+<br>
+
+----------------------------------
+# 4. Searching for Genes With Interesting Function in mWGS Data<a name="header4"></a>
+
+It is also possible to search mWGS data for evidence of genes whose function is of _a priori_
+interest. In this session we will search for evidence of genes assiociated with antibiotic
+resistance using the tool [ShortBRED][shortbred-home]. 
+
+ShortBRED uses reference databases to identify unique 'marker sequences' that distinguish 
+functionally related groups of genes (for example genes encoding beta-lactam resistance). It then
+identifies and quantifies these marker sequences within mWGS samples. 
+
+Start by looking at the pre-built reference database containing unique marker sequences that 
+distinguish families of antibiotic resistance genes.
+
+{% highlight bash %}
+# Make sure you are in the session working directory
+cd ~/MCA/mWGS/
+cd data
+
+# The suffix .faa denotes a fasta file containing amino acid sequences
+head ShortBRED_ABR_101bp_markers.faa
+{% endhighlight %}
+
+Note that this fasta file contans protein sequences. As our data are 
+nucleotide sequences it is necessary to perform a translated alignment to search for marker
+sequences in our mWGS data. ShortBRED does this by default.
+
+{% highlight bash %}
+# Create a sub-directory for ShortBRED output
+mkdir shortbred_output
+
+# Run ShortBRED
+for FASTQ in fastqs/*fastq
+do
+  SAMPLEID="$(basename ${FASTQ%.subsample.fastq})"
+
+  mkdir shortbred_output/${SAMPLEID}_dir
+
+  shortbred_quantify.py \
+    --markers ./data/ShortBRED_ABR_101bp_markers.faa \
+    --wgs $FASTQ \
+    --results shortbred_output/${SAMPLEID}_shortbred.tsv \
+    --tmp shortbred_output/${SAMPLEID}_dir \
+done
+
+# Have a look at the files generated by running ShortBRED
+cd shortbred_output
+ls
+head MET0109_shortbred.tsv
+{% endhighlight %}
+
+> In addition to the ShortBRED results files for each sample, what other files are present in the
+> output directory?
+
+For a detailed description of the output files generated by running ShortBRED, see
+[here][shortbred-help]. Note that ShortBRED output is by default normalized to RPKM, so there is
+no need to perform additional normalization on these data. 
+
+The default ShortBRED output (specified by `--results` argument) contains four columns. However we
+are only interested in the relative abundance. We will therefore extract this column before merging
+the results for each sample into a count matrix.
+
+
+{% highlight bash %}
+# First it's necessary to extract the FPKM column from the ShortBRED output
+# This can be done with the 'cut' command
+for FILE in shortbred_output/*_shortbred.tsv
+do
+  SAMPLEID="${FILE%_shortbred.tsv}"
+  cat $FILE | cut -f1,2 > ${SAMPLEID}_shortbred_subset.tsv
+done
+
+#It's then possible to use HUMAnN2 to merge the shortbred data
+humann2_join_tables --input shortbred_output \
+  --output shortbred_abundance.tsv \
+  --file_name _shortbred_subset.tsv
+{% endhighlight %}
+
+The result of this analysis is a table listing the relative abundance of antibiotic resistance genes
+in our mWGS data. For other pre-built ShortBRED databases of unique 'marker sequences' see
+[here][shortbred-downloads]
+
+<br>
+<br>
+
+----------------------------------
+# 5. Visualizing Functional Analysis Output with R<a name="header5"></a>
+
+Steps 2(#header2), 3(#header3), and 4(#header4) outlined above have each generated a count matrix
+illustrating the different types of information it is possible to extract from mWGS data. As with
+16S data it is possible to use R to perform statistical analysis and provide visual summaries of 
+these data.
+
+
+
+<br>
+<br>
+
+----------------------------------
+# Conclusions<a name="header6"></a>
+
+Reading data into R provides access to a wide variety of R libraries that are written specifically
+for the analysis of 16S sequence data. Using packages provides 
+[high-level][wikipedia-highlevel] 
+access to the power of R as a statistical programming language, thereby dramatically increasing
+the ease of analysis. However, this comes at an increased risk of making invalid statistical
+assumptions about your data. 
+
+----------------------------------
+[metaphlan2-homepage]: https://bitbucket.org/biobakery/metaphlan2/overview
+[metaphlan2-tutorial]: https://bitbucket.org/biobakery/biobakery/wiki/metaphlan2
+[bowtie2-home]: http://bowtie-bio.sourceforge.net/bowtie2/index.shtml
+[krona-home]: https://github.com/marbl/Krona/wiki
+[humann2-home]: https://bitbucket.org/biobakery/humann2/wiki/Home
+[ncbi-reference]: https://www.ncbi.nlm.nih.gov/genome/browse/reference/
+[uniref-home]: http://www.uniprot.org/help/uniref
+[humann2-path]: https://bitbucket.org/biobakery/humann2/wiki/Home#markdown-header-output-files
+[metacyc-home]: https://metacyc.org/
+[shortbred-home]: https://huttenhower.sph.harvard.edu/shortbred
+[shortbred-help]: https://bitbucket.org/biobakery/shortbred/wiki/Home
+[shortbred-downloads]: https://bitbucket.org/biobakery/shortbred/downloads/
