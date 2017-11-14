@@ -115,11 +115,11 @@ flash ./fastqs/A_control.R1_sub.fastq ./fastqs/A_control.R2_sub.fastq
 ls
 {% endhighlight %}
 
-> Have a look at the files created bt FLASh, in particular the file out.extendedFrags.fastq<br>
+> Have a look at the files created by FLASh, in particular the file out.extendedFrags.fastq<br>
 > Are all sequences the same length?
 
 For information on options for running FLASh and the files it creates visit the
-[website][flash-website], or access the help documentation on the commandline.
+[website][flash-website], or access the help documentation on the command line.
 
 {% highlight bash %}
 flash --help
@@ -221,7 +221,7 @@ sequence appears in the data set.
 cat all_samples.fasta | grep ">" | wc -l
 
 # Run USEARCH to generate a file of unique sequences
-usearch -fastx_unique all_samples.fasta -fastaout all_unique_seqs.fasta -sizeout
+usearch -fastx_uniques all_samples.fasta -fastaout all_unique_seqs.fasta -sizeout
 {% endhighlight %}
 
 > How many unique sequences remain after removing duplicate copies?
