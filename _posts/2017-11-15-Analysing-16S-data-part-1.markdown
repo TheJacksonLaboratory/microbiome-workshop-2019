@@ -263,7 +263,7 @@ Assuming that a certain amount of 16S gene sequence variation exists within spec
 bacterial strains?) we will generate operational taxonomic units (OTUs) based on the assumption 
 that two sequences which are more than 97% similar belong to the same species.
 
-![Uparse](/images/uparseotu_algo.jpeg)
+![Uparse]({{ site.baseurl }}/images/uparseotu_algo.jpeg)
 
 
 The UPARSE-OTU algorithm, implemented in USEARCH, can be used to generate OTUs based on this 97%

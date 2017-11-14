@@ -63,7 +63,7 @@ command line; the tab on the top right provide information on your current R ses
 the bottom right provides additional useful information, such as help pages, or a window for viewing
 graphical plots. <br>
 
-![RStudio](/images/rstudio.png)
+![RStudio]({{ site.baseurl }}/images/rstudio.png)
 
 We will be writing most of our code in the script window (top left), and running it in the R console.
 

@@ -246,7 +246,7 @@ one
 
 The result should look something like this: 
 
-![krona](/images/krona_plot.png)
+![krona]({{ site.baseurl }}/images/krona_plot.png)
 
 <br>
 <br>
@@ -562,7 +562,7 @@ plot(pl)
   
 The result should look something like this:
 
-![shortbred](/images/shortbread_pa.png)
+![shortbred]({{ site.baseurl }}/images/shortbread_pa.png)
 
 > Try plotting an equivalent heat map without converting values to presence absence.
 
@@ -643,7 +643,7 @@ plot(pl)
 
 The resulting plot should look something like this:
 
-![humann2](/images/humann2_boxplot.png)
+![humann2]({{ site.baseurl }}/images/humann2_boxplot.png)
 
 > Try selecting and plotting other pathways in the HUMAnN2 output.
 
