@@ -335,10 +335,10 @@ sequences in each sample that match each OTU.
 
 {% highlight bash %}
 # find the location of the python script usearch2otutab.py
-which usearch2otutab.py
+which uc2otutab.py
 
 # call this script from it's installed location using python
-python `which usearch2otutab.py` otu_map.uc > otu_matrix.tsv
+python ~/local/bin/uc2otutab.py otu_map.uc > otu_matrix.tsv
 {% endhighlight %}
 
 The resulting file `otu_matrix.tsv` is a count matrix in which columns are samples, rows are OTUs
