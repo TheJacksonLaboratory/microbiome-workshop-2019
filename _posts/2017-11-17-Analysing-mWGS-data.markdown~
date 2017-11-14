@@ -149,8 +149,8 @@ do
   # run Metaphlan2
   metaphlan2.py $FASTQ \
     --input_type fastq \
-    --output_file metaphlan2_profiles/${SAMPLEID}_metagenome_profile.tsv
-    --bowtie2out metaphlan2_mapped/${SAMPLEID}_bowtie2out.txt
+    --output_file metaphlan2_profiles/${SAMPLEID}_metagenome_profile.tsv \
+    --bowtie2out metaphlan2_mapped/${SAMPLEID}_bowtie2out.txt \
     --nproc 4
   # Print a helpful message after each completed Metaphlan2 run
   echo Completed Metaphlan2 for $SAMPLEID on `date`

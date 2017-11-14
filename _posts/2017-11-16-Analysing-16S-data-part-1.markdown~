@@ -394,11 +394,11 @@ help pages, as well as the `README` file that comes with the RDP installation.
 
 {% highlight bash %}
 # Running RDP without input arguments will cause it to print its help pages. 
-java -Xmx1g -jar ~/MCA/apps/rdp_classifier_2.12/dist/classifier.jar
-java -Xmx1g -jar ~/MCA/apps/rdp_classifier_2.12/dist/classifier.jar classify
+java -Xmx1g -jar ~/local/src/rdp_classifier_2.12/dist/classifier.jar
+java -Xmx1g -jar ~/local/src/rdp_classifier_2.12/dist/classifier.jar classify
 
 # For more detailed information look at the README file
-less ~/MCA/apps/rdp_classifier_2.12/README
+less ~/local/src/rdp_classifier_2.12/README
 {% endhighlight %}
 
 > What does the command `-c 0.8` mean?
