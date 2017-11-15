@@ -236,7 +236,7 @@ do
   # run script to convert profile to format required by Krona
   metaphlan2krona.py --profile $PROFILE --krona metaphlan2_krona/${SAMPLEID}_krona_file.tsv
   # run Krona to generate interactive html file
-  ktImportText metaphlan2_krona/${SAMPLIEID}_krona_file.tsv \
+  ktImportText metaphlan2_krona/${SAMPLEID}_krona_file.tsv \
     -o  metaphlan2_krona/${SAMPLEID}_krona_file.html
 done
 {% endhighlight %}
