@@ -159,7 +159,7 @@ done
 
 However, running the above code is time consuming, even when using `--nproc 4` to run on multiple
 cores. You will therefore find the pre-computed output of the first step already in the directory
-`./fastqs_metaphlan2_mapped`. It is then possible to run the second step independently. 
+`./metaphlan2_mapped`. It is then possible to run the second step independently. 
 
 {% highlight bash %}
 # make a directory in which to store the Metaphlan2 output file
@@ -169,7 +169,7 @@ mkdir metaphlan2_profiles
 for MAPFILE in metaphlan2_mapped/*bowtie2out.txt
 do
   # capture the file prefix, which corresponds to the sample name
-  SAMPLEID="$(basename ${MAPFILE%._bowtie2out.txt})"
+  SAMPLEID="$(basename ${MAPFILE%_bowtie2out.txt})"
   # run Metaphlan2
   metaphlan2.py $MAPFILE \
     --input_type bowtie2out \
@@ -211,7 +211,7 @@ our existing count matrix.
 
 {% highlight bash %}
 # some command line magic to extract genus counts
-cat metaphlan2_counts.tsv | awk '$1 ~ /g__[A-Za-z]*$/'  > metaphlan2_genera_counts.tsv
+cat metaphlan2_counts.tsv | awk 'NR == 1 || $1 ~ /g__[A-Za-z]*$/'  > metaphlan2_genera_counts.tsv
 {% endhighlight %}
 
 > Aside from the taxonomic level reported, what other important differences exist between an
@@ -234,11 +234,11 @@ do
   # capture the file prefix, which corresponds to the sample name
   SAMPLEID="$(basename ${PROFILE%_metagenome_profile.tsv})"
   # run script to convert profile to format required by Krona
-  metaphlan2krona.py --profile $PROFILE --krona metaphlan2_krona/${SAMPLIEID}_krona_file.tsv
+  metaphlan2krona.py --profile $PROFILE --krona metaphlan2_krona/${SAMPLIEID}_krona_file.tsv \
   # run Krona to generate interactive html file
   ktImportText metaphlan2_krona/${SAMPLIEID}_krona_file.tsv \
     -o  metaphlan2_krona/${SAMPLIEID}_krona_file.html
-one
+done
 {% endhighlight %}
 
 > Using your web browser navigate to the html files created by Krona. Have a look at the taxonomic
