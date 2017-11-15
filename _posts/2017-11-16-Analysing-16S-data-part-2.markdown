@@ -49,12 +49,11 @@ cd Session1.2
 # create a link for the files that will be used from here on
 ln -s ../Session1/otu_matrix.tsv .
 ln -s ../Session1/otu_taxonomy_rdp_0.8.tsv .
-
-# run RStudio from this directory
-rstudio .
 {% endhighlight %}
 
-The final command will open a [Graphical User Interface][wikipedia-gui] (GUI), which will look
+Once you have set up your working directory, return to the homepage for these practical sessions
+and click on the link to open RStudio. 
+This will open a [Graphical User Interface][wikipedia-gui] (GUI) in your browser, which will look
 something like the image below. If you do not see the panel on the top left, on the control bar
 select "File" > "New File" > "RScript". Brielfy, there should now be four open tabs: the top left is
 an R script, which is analagous to the Nano script we created during the first part of this session;
