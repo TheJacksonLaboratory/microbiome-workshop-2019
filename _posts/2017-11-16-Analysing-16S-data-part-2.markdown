@@ -163,7 +163,7 @@ colSums(df_rare)
 m_count <- as.matrix(df_count)
 # Use the prop.table() function to fetch proportions
 m_prop <- prop.table(m_count, margin=2)
-df_count_prop <- as.data.frame(m_count)
+df_count_prop <- as.data.frame(m_prop)
 head(df_count_prop)
 
 {% endhighlight %}
@@ -321,7 +321,7 @@ diversity.
 
 {% highlight R %}
 # It is possible to generate a distance matrix in phyloseq
-dist_norm <- distance(physeq_norm, method='bray')
+dist_norm <- phyloseq::distance(physeq_norm, method='bray')
 
 # Plot beta diversity in phyloseq (DM generated implicitly)
 # First it's necessary to perform the ordination
