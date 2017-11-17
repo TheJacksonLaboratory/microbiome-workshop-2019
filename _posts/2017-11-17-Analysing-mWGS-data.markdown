@@ -107,8 +107,14 @@ Try running Metaphlan2 for a single sample.
 cd ~/MCA/mWGS/
 pwd
 
+# Before running Metaphlan2, lets see what time it is? 
+date
+
 # Run Metaphlan2, providing a single sample as input
 metaphlan2.py fastqs/MET0109.subsample.fastq --input_type fastq >  MET0109_metagenome_profile.tsv
+
+# How long did Metaphlan2 take to run? 
+date
 
 # Have a look at the principal output of Metaphlan2
 less MET0109_metagenome_profile.tsv
@@ -162,6 +168,8 @@ cores. You will therefore find the pre-computed output of the first step already
 `./metaphlan2_mapped`. It is then possible to run the second step independently. 
 
 {% highlight bash %}
+      ### Warning: you may not want to run this code during the session ###
+
 # make a directory in which to store the Metaphlan2 output file
 mkdir metaphlan2_profiles
 
@@ -177,6 +185,10 @@ do
     --nproc 4
 done
 {% endhighlight %}
+
+     ### Alternative to running the above code ###
+# Copy the output directory from backup
+cp -r ~/MCA/backup/mWGS/metaphlan2_profiles .
 
 <br>
 
