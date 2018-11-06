@@ -64,6 +64,13 @@ The Bash shell gives us access to several useful Unix utilites for working with 
 
 {% endhighlight %}
 
+Here, the `echo` command has taken the input text and directed it to our screen as *Standard Output*, or *stdout*. We can *redirect* stdout to a file using the `>` character. For example:
+
+ 
+{% highlight bash %}
+
+{% endhighlight %}
+
 One of the great things about 
 During this session you may wish to keep a record of the commands used to analyse your 16S data. 
 One way to do this is to write each command to a file. From the command line, this can be 
