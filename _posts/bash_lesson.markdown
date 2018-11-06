@@ -86,8 +86,8 @@ Now what if you want to edit the file you just created? For this, we will use a 
 > Add a new line to your document: "Violets are blue"<br> 
 > Try saving the document, closing it, and re-opening it.<br>
 > Create a second file called 'text_file2' that contains the rest of our poem:<br>
->		There are trillions of bacteria
->		Living on you!
+>> There are trillions of bacteria<br>
+>> Living on you!<br>
 
 For more information on using nano, see the Nano [online documentation][nano-homepage]. 
 <br>
