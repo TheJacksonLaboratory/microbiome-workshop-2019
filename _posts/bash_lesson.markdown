@@ -32,6 +32,7 @@ Details of the individual session components are included below:
 The job of a shell program is to provide a text-based environment for viewing files and directories, running programs and pipelines, and monitoring program status and output. The shell that we will be using in this workshop is called Bash. <br>
 
 After logging in to your instance for this workshop, you should see a Bash prompt, where you can input commands:
+
 {% highlight bash %}
 
 {% endhighlight %}
@@ -72,8 +73,8 @@ Here, the `echo` command has taken the input text and directed it to our screen 
 
 {% endhighlight %}
 
->Try creating a text file called 'text_file1' that contains the line "Roses are red"<br>
->Try viewing the content of your file with the `cat` command: `cat text_file1`.
+> Challenge 2.1: Try creating a text file called 'text_file1' that contains the line "Roses are red"<br>
+> Challenge 2.2: Try viewing the content of your file with the `cat` command: `cat text_file1`.
 
 Now what if you want to edit the file you just created? For this, we will use a basic [text editor][texteditor-wikipedia] called Nano. 
 
@@ -83,9 +84,9 @@ Now what if you want to edit the file you just created? For this, we will use a 
 
 ![Nano]({{ site.baseurl }}/images/NanoExample.png)
  
-> Add a new line to your document: "Violets are blue"<br> 
-> Try saving the document, closing it, and re-opening it.<br>
-> Create a second file called 'text_file2' that contains the rest of our poem:<br>
+> Challenge 2.3: Add a new line to your document: "Violets are blue"<br> 
+> Challenge 2.4: Try saving the document, closing it, and re-opening it.<br>
+> Challenge 2.5: Create a second file called 'text_file2' that contains the rest of our poem:<br>
 >> There are trillions of bacteria<br>
 >> Living on you!<br>
 
