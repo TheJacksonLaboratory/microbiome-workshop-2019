@@ -56,6 +56,7 @@ rm
 
 echo
 nano
+cat
 
 The Bash shell gives us access to several useful Unix utilites for working with text and text files. We'll start with a very simple command called `echo`, which simply repeats text back that is given as an argument. For example:
 
@@ -71,15 +72,18 @@ Here, the `echo` command has taken the input text and directed it to our screen 
 
 {% endhighlight %}
 
-One of the great things about 
-During this session you may wish to keep a record of the commands used to analyse your 16S data. 
-One way to do this is to write each command to a file. From the command line, this can be 
-acheived using a [text editor][texteditor-wikipedia]. There are many to choose from, but this 
-session will use Nano.
+>Try creating a text file called 'text_file1' that contains the line "Roses are red"
+>Try viewing the content of your file with the `cat` command: `cat text_file1`.
+
+Now what if you want to edit the file you just created? For this, we will use a basic [text editor][texteditor-wikipedia] called Nano. 
+
+{% highlight bash %}
+
+{% endhighlight %}
 
 ![Nano]({{ site.baseurl }}/images/NanoExample.png)
  
-> Try writing some text to the document 16s_pipeline.sh<br>
+> Add a line 
 > Try saving the document, closing it, and re-opening it.
 
 Because the saved document is a shell script, it is also possible to run the entire 
@@ -131,7 +135,6 @@ For further detail on the contents of fastq files, see [`here`][fastq-wikipedia]
 
 stderr
 stdout
-cat
 head -4
 wc -l
 less
