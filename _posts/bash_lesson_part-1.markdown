@@ -1,24 +1,25 @@
 ---
 layout: post
-title:  "Analysing 16S data: Part 1"
-date:   2017-11-16 12:00:00
+title: "Working at the command line with Bash: Part 1" 
+date:   2018-11-06 12:00:00
 categories: jekyll update
 ---
 
 ## Session Overview
 
-During this session we will cover the fundamentals of amplicon-based microbiome analysis.<br>
+The purpose of this session is to provide familiarity and comfort with the Unix shell for the purposes of working with the course material. It is not meant to be a comprehensive lesson. For more in-depth instruction of using Bash, the default Unix shell, please see the Software Carpentry lesson, ["The Unix Shell"][http://swcarpentry.github.io/shell-novice/] <br>
+
+You may see advanced commands in the workshop that are not covered here because of time. If you are curious about what they do, ask one of the instructors or helpers, use the `man` command (see below), or try an online resource such as StackExchange (or Google!).<br>
+
 Details of the individual session components are included below:
 
-&nbsp;&nbsp;[1. Using a text editor to document your actions](#header1) <br>
-&nbsp;&nbsp;[2. An introduction to sequence data](#header2) <br>
-&nbsp;&nbsp;[3. Combining paired-end reads into contiguous sequences](#header3) <br>
-&nbsp;&nbsp;[4. Generating a unique set of 16S gene sequences](#header4) <br>
-&nbsp;&nbsp;[5. Clustering unique sequences into operational taxonomic units](#header5) <br>
-&nbsp;&nbsp;[6. Creating a table of OTU abundance](#header6) <br>
-&nbsp;&nbsp;[7. Assigning taxonomy to OTU sequences](#header7) <br>
+&nbsp;&nbsp;[1. Getting started with the shell](#header1) <br>
+&nbsp;&nbsp;[2. Creating and editing text files](#header2) <br>
+&nbsp;&nbsp;[3. Running commands and managing output](#header3) <br>
+&nbsp;&nbsp;[4. Variables and wildcards](#header4) <br>
+&nbsp;&nbsp;[5. Loops and scripts](#header5) <br>
+&nbsp;&nbsp;[6. Miscellaneous](#header6) <br>
 
-&nbsp;&nbsp;[Conclusions](#header8) <br>
 
 <br>
 <br>
@@ -27,22 +28,48 @@ Details of the individual session components are included below:
 
 ## Session One
 ----------------------------------
-# 1. Using a text editor to document your actions<a name="header1"></a>
+# 1. Getting started with the shell<a name="header1"></a>
 
+The job of a shell program is to provide a text-based environment for viewing files and directories, running programs and pipelines, and monitoring program status and output. The shell that we will be using in this workshop is called Bash. <br>
+
+After logging in to your instance for this workshop, you should see a Bash prompt, where you can input commands:
+{% highlight bash %}
+
+{% endhighlight %}
+
+In the example above, you'll see that a few commands have been entered at the prompt. The first line is empty and just shows the prompt. The second line 
+
+"""The first line shows only a prompt, indicating that the shell is waiting for input. Your shell may use different text for the prompt. Most importantly: when typing commands, either from these lessons or from other sources, do not type the prompt, only the commands that follow it.
+"""
+
+
+ls
+<options, including -h -a -l -p>
+pwd
+cd
+man
+mkdir
+cp/mv
+rm
+
+----------------------------------
+# 2. Creating and editing text files<a name="header2"></a>
+
+echo
+nano
+
+The Bash shell gives us access to several useful Unix utilites for working with text and text files. We'll start with a very simple command called `echo`, which simply repeats text back that is given as an argument. For example:
+
+ 
+{% highlight bash %}
+
+{% endhighlight %}
+
+One of the great things about 
 During this session you may wish to keep a record of the commands used to analyse your 16S data. 
 One way to do this is to write each command to a file. From the command line, this can be 
 acheived using a [text editor][texteditor-wikipedia]. There are many to choose from, but this 
 session will use Nano.
-
-{% highlight bash %}
-# Navigate to the working directory for this session
-cd ~/MCA/16s/Session1
-
-# Open a new file
-nano 16s_pipeline.sh
-{% endhighlight %}
- 
-Opening a new text file you should see something similar to this: 
 
 ![Nano]({{ site.baseurl }}/images/NanoExample.png)
  
@@ -64,9 +91,6 @@ chmod u+x 16s_pipeline.sh
 For more information on using nano, see the Nano [online documentation][nano-homepage]. 
 <br>
 <br>
-
-----------------------------------
-# 2. An introduction to 16S sequence data<a name="header2"></a>
 
 The ubiquitous format for the storage of sequence data are fastq files.
 To begin, navigate to the location of the sequence data that will be used for today's session.
@@ -97,8 +121,19 @@ For further detail on the contents of fastq files, see [`here`][fastq-wikipedia]
 <br>
 
 ----------------------------------
-# 3. Combining paired-end reads into contiguous sequences<a name="header3"></a> 
+# 3. Running commands and managing output<a name="header3"></a> 
 
+stderr
+stdout
+cat
+head -4
+wc -l
+less
+grep -v (exclude)
+running a command with inputs with redirection
+|
+> - “redirect"
+&>
 In order to generate a single, contiguous sequence spanning the target region of the 16S gene, it's
 necessary the paired reads in each fastq file. To do this we will use a tool called FLASh. Start by
 combining two fastq files for a single sample.
@@ -184,7 +219,7 @@ ls fastqs_combined
 <br>
 
 ----------------------------------
-# 4. Generating a unique set of 16S gene sequences<a name="header4"></a>
+# 4. Variables and wildcards<a name="header4"></a>
 
 Having successfully processed our sequence data, the goals now are to:
 1. Identify distinct biological taxa
@@ -250,7 +285,7 @@ usearch -sortbysize all_unique_seqs.fasta -fastaout all_unique_seqs_sorted.fasta
 
 
 ----------------------------------
-# 5. Clustering unique sequences into operational taxonomic units<a name="header5"></a>
+# 5. Loops and scripts<a name="header5"></a>
 
 As discussed in Section 4, sequence-based analysis assumes that taxonomic (or biologically
 relevant?) differences between bacteria are reflected by differences in their 16S gene sequence. 
@@ -288,7 +323,29 @@ however the UPARSE-OTU algorithm implicitly filters chimeras.
 <br>
 
 ----------------------------------
-# 6. Creating a table of OTU abundance<a name="header6"></a>
+# 6. Miscellaneous<a name="header6"></a>
+
+
+variable
+${VARNAME}
+backticks ` `
+date
+ 
+\ — continuous character
+ 
+comments #
+wildcards *
+ 
+for
+do
+ 
+ 
+execution of program
+./
+ 
+ 
+which
+awk
 
 Having generated a set of sequences representing distinct bacterial taxa (OTUs). The next step is to
 quantify OTU abundance. This can be acheived by counting the number of sequences in each sample that
@@ -428,19 +485,3 @@ of reproducibility in modern biological research see [here][nbiotech-article].
 
 
 [texteditor-wikipedia]: https://en.wikipedia.org/wiki/Text_editor
-[nano-homepage]: https://www.nano-editor.org/docs.php
-[fastq-wikipedia]: https://en.wikipedia.org/wiki/FASTQ_format
-[flash-website]: https://ccb.jhu.edu/software/FLASH/
-[go2linux-forloop]: http://go2linux.garron.me/bash-for-loop/
-[fastx-homepage]: http://hannonlab.cshl.edu/fastx_toolkit/
-[usearch-homepage]: https://www.drive5.com/usearch/
-[usearch-definingotus]: https://www.drive5.com/usearch/manual/otus.html
-[usearch-chimera]: https://www.drive5.com/usearch/manual/chimera_formation.html
-[chimeraslayer-home]: http://microbiomeutil.sourceforge.net/#A_CS
-[usearch-clusterformat]: https://www.drive5.com/usearch/manual/opt_uc.html
-[mothur-sop]: https://www.mothur.org/wiki/MiSeq_SOP
-[qiime-tutorials]: http://qiime.org/tutorials/
-[tornado-tutorial]: http://acai.igb.uiuc.edu/bio/tutorial.html
-[nbiotech-article]: https://www.nature.com/articles/nbt.2740
-[ncbi-blast]: https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastSearch
-[rdp-database]: http://rdp.cme.msu.edu/misc/resources.jsp
