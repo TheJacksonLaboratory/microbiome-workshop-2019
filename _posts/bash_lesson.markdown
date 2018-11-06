@@ -9,7 +9,7 @@ categories: jekyll update
 
 The purpose of this session is to provide familiarity and comfort with the Unix shell for the purposes of working with the course material. It is not meant to be a comprehensive lesson. For more in-depth instruction of using Bash, the default Unix shell, please see the Software Carpentry lesson, ["The Unix Shell"][sc-url] <br>
 
-You may see advanced commands in the workshop that are not covered here because of time. If you are curious about what they do, ask one of the instructors or helpers, use the `man` command (see below), or try an online resource such as StackExchange (or Google!).<br>
+You may see advanced commands in the workshop that are not covered here because of time. If you are curious about what they do, ask one of the instructors or helpers, use the `man` command (see below), or try an online resource such as [Stack Overflow][so-url] (or [Google][google-url]!).<br>
 
 Details of the individual session components are included below:
 
@@ -486,3 +486,6 @@ of reproducibility in modern biological research see [here][nbiotech-article].
 
 [texteditor-wikipedia]: https://en.wikipedia.org/wiki/Text_editor
 [sc-url]: http://swcarpentry.github.io/shell-novice/
+[so-url]: https://stackoverflow.com
+[google-url]: https://www.google.com
+
