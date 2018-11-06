@@ -9,7 +9,7 @@ categories: jekyll update
 
 The purpose of this session is to provide familiarity and comfort with the Unix shell for the purposes of working with the course material. It is not meant to be a comprehensive lesson. For more in-depth instruction of using Bash, the default Unix shell, please see the Software Carpentry lesson, ["The Unix Shell"][sc-url] <br>
 
-You may see advanced commands in the workshop that are not covered here because of time. If you are curious about what they do, ask one of the instructors or helpers, use the `man` command (see below), or try an online resource such as [Stack Overflow][so-url] (or [Google][google-url]!).<br>
+You may see advanced commands in the workshop that are not covered here because of time. If you are curious about what they do, ask one of the instructors or helpers, use the `man` command (covered in [Section 1](#header1)), or try an online resource such as [Stack Overflow][so-url] (or [Google][google-url]!).<br>
 
 Details of the individual session components are included below:
 
@@ -26,7 +26,6 @@ Details of the individual session components are included below:
 <br>
 
 
-## Session One
 ----------------------------------
 # 1. Getting started with the shell<a name="header1"></a>
 
@@ -287,6 +286,22 @@ usearch -sortbysize all_unique_seqs.fasta -fastaout all_unique_seqs_sorted.fasta
 ----------------------------------
 # 5. Loops and scripts<a name="header5"></a>
 
+variable
+${VARNAME}
+backticks ` `
+date
+ 
+\ — continuous character
+ 
+comments #
+wildcards *
+ 
+for
+do
+ 
+ 
+execution of program
+./
 As discussed in Section 4, sequence-based analysis assumes that taxonomic (or biologically
 relevant?) differences between bacteria are reflected by differences in their 16S gene sequence. 
 But how much do two 16S gene sequences have to differ before they represent two distinct bacterial
@@ -326,24 +341,8 @@ however the UPARSE-OTU algorithm implicitly filters chimeras.
 # 6. Miscellaneous<a name="header6"></a>
 
 
-variable
-${VARNAME}
-backticks ` `
-date
  
-\ — continuous character
- 
-comments #
-wildcards *
- 
-for
-do
- 
- 
-execution of program
-./
- 
- 
+chmod 
 which
 awk
 
@@ -462,25 +461,6 @@ less ~/local/src/rdp_classifier_2.12/README
  
 <br>
 <br>
-
-----------------------------------
-# Conclusions<a name="header8"></a>
-
-This session provides an overview of the fundamental steps taken to process 16S gene
-sequence data from raw reads to a taxonomic abundance table that can be used for downstream
-analysis. It makes use of the freely available tools FLASh and USEARCH. However, there are many 
-other excellent tools/SOPs available online. See for example 
-[Mothur][mothur-sop], 
-[Qiime][qiime-tutorials],
-and [Tornado][tornado-tutorial]
-for further discussion of the issues surrounding 16S sequence analysis.
-
-If you have managed to maintain your script `16s_pipeline.sh` throughout this session, then you will
-have a record of all the steps taken during 16S sequence processing. It should now  be 
-possible to rerun this pipeline on this and other datasets to automatically go from 
-[merging fastq files](#header3b) to [generating a count matrix](#header6). Pipelines are an
-essential part of high-throughput sequence analysis. For an interesting discussion of the importance
-of reproducibility in modern biological research see [here][nbiotech-article].
 
 
 
