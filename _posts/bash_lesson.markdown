@@ -73,10 +73,10 @@ Here, the `echo` command has taken the input text and directed it to our screen 
 
 {% endhighlight %}
 
-> Challenge 2.1: Try creating a text file called 'text_file1' that contains the line "Roses are red"<br>
+> Challenge 2.1: Create a text file called 'text_file1' that contains the line "Roses are red"<br>
 > Challenge 2.2: Try viewing the content of your file with the `cat` command: `cat text_file1`.
 
-Now what if you want to edit the file you just created? For this, we will use a basic [text editor][texteditor-wikipedia] called Nano. 
+Now what if you want to edit the file you just created? For this, we will use a basic [text editor][texteditor-wikipedia] called Nano. For details on how to use Nano, see the [online documentation][nano-homepage]. 
 
 {% highlight bash %}
 
@@ -86,17 +86,25 @@ Now what if you want to edit the file you just created? For this, we will use a 
  
 > Challenge 2.3: Add a new line to your document: "Violets are blue"<br> 
 > Challenge 2.4: Try saving the document, closing it, and re-opening it.<br>
-> Challenge 2.5: Create a second file called 'text_file2' that contains the rest of our poem:<br>
+> Challenge 2.5: Using any method you'd like, create a second file called 'text_file2' that contains the rest of our poem:<br>
 >> There are trillions of bacteria<br>
 >> Living on you!<br>
 
-For more information on using nano, see the Nano [online documentation][nano-homepage]. 
 <br>
 <br>
 
 
 ----------------------------------
 # 3. Running commands and managing output<a name="header3"></a> 
+
+As mentioned above, Bash gives you access to dozens of small programs that are very useful for dealing with text files. A few examples are:
+
+`grep`
+grep lets you perform searches on your text files. For example:
+
+{% highlight bash %}
+
+{% endhighlight %}
 
 stderr
 stdout
