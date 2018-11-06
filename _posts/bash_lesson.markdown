@@ -55,6 +55,7 @@ rm
 <br>
 <br>
 <br>
+
 ----------------------------------
 # 2. Creating and editing text files<a name="header2"></a>
 
@@ -96,6 +97,7 @@ Now what if you want to edit the file you just created? For this, we will use a 
 <br>
 <br>
 <br>
+
 ----------------------------------
 # 3. Running commands and managing output<a name="header3"></a> 
 
@@ -151,6 +153,7 @@ execution of program
 <br>
 <br>
 <br>
+
 ----------------------------------
 # 6. Miscellaneous<a name="header6"></a>
 
