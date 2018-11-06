@@ -64,7 +64,7 @@ The Bash shell gives us access to several useful Unix utilites for working with 
 
 {% endhighlight %}
 
-Here, the `echo` command has taken the input text and directed it to our screen as *Standard Output*, or *stdout*. We can *redirect* stdout to a file using the `>` character. For example:
+Here, the `echo` command has taken the input text and directed it to our screen as **Standard Output**, or **stdout**. We can **redirect** stdout to a file using the `>` character. For example:
 
  
 {% highlight bash %}
