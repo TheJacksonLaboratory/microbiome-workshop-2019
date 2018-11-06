@@ -72,7 +72,7 @@ Here, the `echo` command has taken the input text and directed it to our screen 
 
 {% endhighlight %}
 
->Try creating a text file called 'text_file1' that contains the line "Roses are red"
+>Try creating a text file called 'text_file1' that contains the line "Roses are red"<br>
 >Try viewing the content of your file with the `cat` command: `cat text_file1`.
 
 Now what if you want to edit the file you just created? For this, we will use a basic [text editor][texteditor-wikipedia] called Nano. 
@@ -83,52 +83,16 @@ Now what if you want to edit the file you just created? For this, we will use a 
 
 ![Nano]({{ site.baseurl }}/images/NanoExample.png)
  
-> Add a line 
-> Try saving the document, closing it, and re-opening it.
-
-Because the saved document is a shell script, it is also possible to run the entire 
-script from the command line.
-
-{% highlight bash %}
-# Make the file 16s_pipeline.sh executable from the command line.
-chmod u+x 16s_pipeline.sh
-
-# run the code in 16s_pipeline.sh
-./16s_pipeline.sh
-{% endhighlight %}
-
+> Add a new line to your document: "Violets are blue"<br> 
+> Try saving the document, closing it, and re-opening it.<br>
+> Create a second file called 'text_file2' that contains the rest of our poem:<br>
+>		There are trillions of bacteria
+>		Living on you!
 
 For more information on using nano, see the Nano [online documentation][nano-homepage]. 
 <br>
 <br>
 
-The ubiquitous format for the storage of sequence data are fastq files.
-To begin, navigate to the location of the sequence data that will be used for today's session.
-
-{% highlight bash %}
-cd ~/MCA/16s/Session1/fastqs/             # change directory
-ls                                        # list contents of directory
-{% endhighlight %}
- 
-These data are from an Illumina paired-end sequencing run. There should be two files per sample,
-with the files *.R1_sub.fastq and *.R2_sub.fastq containing the first and second reads in each 
-pair, respectively. Have a look at the first four lines in one of the fastqs.
-
-{% highlight bash %}
-head -4 A_control.R1_sub.fastq            # view the first n lines of a file
-
-@M03204:217:000000000-B8W8J:1:2108:24791:7353
-AGAGTTTGATCCTGGCTCAGGATGAACGCTGGCGGCATGCCTTACACATGCAAGTCGGACGGGAAGTGGTGTTTCCAGTGGCGGACGGGTGAGTAACGCGTAAGAACCTACCCTTGGGAGGGGAACAACAGCTGGAAACGGCTGCTAATACCCCGTAGGCTGAGGAGCAAAAGGAGGAATCCGCCCGAGGAGGGGTTCGCGTCTGATTAGCTAGTTGGTGAGGCAATAGCTTACCAAGGCGATGATCAGTAGCTGGTCCGAGAGGATGATCAGCCACACTGGGACTGAGACACGGCCCAGA
-+
-CCCCCGFGGGGGGFCFFGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGFGGFGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGDDFGGGGGGGGGGGGGGGGGGGFGGGGDGGGGGGGGGFGGGGGGEGB:FEFGGGFGGECGGGGFFGFGFGGGGGGGGFGFEGGGGGGFFFGGGGGGFECGGGFGGGGGGGGGGGGGGGGGGGGF6CFFGGGGDGGEFFCF:5*)5>29*5<)5>GF4)
-{% endhighlight %}
-
-> What information is contained in each line of the fastq? 
-
-For further detail on the contents of fastq files, see [`here`][fastq-wikipedia].
-<br>
-<br>
-<br>
 
 ----------------------------------
 # 3. Running commands and managing output<a name="header3"></a> 
