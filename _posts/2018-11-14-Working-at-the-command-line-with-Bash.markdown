@@ -75,11 +75,104 @@ ubuntu@ip-172-31-60-130:~/local$ ls -p
 bin/  src/  usearch6.0.98_i86linux32
 {% endhighlight %}
 
-ls
-<options, including -h -a -l -p>
-pwd
-cd
-man
+You can also change into the parent directory using `cd ..` as follows:
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/local$ cd ..
+ubuntu@ip-172-31-60-130:~$ pwd
+/home/ubuntu
+{% endhighlight %}
+
+Finally, you can change directly to any directory by providing its full path:
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~$ cd /home/ubuntu/MCA/data/16S
+ubuntu@ip-172-31-60-130:~/MCA/data/16S$ pwd
+/home/ubuntu/MCA/data/16S
+ubuntu@ip-172-31-60-130:~/MCA/data/16S$ cd ..
+ubuntu@ip-172-31-60-130:~/MCA/data$ pwd
+/home/ubuntu/MCA/data
+ubuntu@ip-172-31-60-130:~/MCA/data$ cd ../..
+ubuntu@ip-172-31-60-130:~$ ls
+anaconda2  local  MCA  R
+{% endhighlight %}
+
+> Challenge 1.1: Determine what `cd ../..` did in the above example.<br>
+> Challenge 1.2: Note how the text to the left of `$` has been changing. What do you think `~` means?
+
+In the `ls` examples, we have been using an option, `-p`, to indicate which items in the directory are subdirectories. There are actually many different options we can use to modify the behavior of `ls`. For example, we can list directory contents in the "long" format using `-l`.
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~$ cd /home/ubuntu/MCA/16s/Session1/fastqs
+ubuntu@ip-172-31-60-130:~/MCA/16s/Session1/fastqs$ ls
+A_control.R1_sub.fastq  D_control.R1_sub.fastq  G_control.R1_sub.fastq  J_disease.R1_sub.fastq  M_disease.R1_sub.fastq
+A_control.R2_sub.fastq  D_control.R2_sub.fastq  G_control.R2_sub.fastq  J_disease.R2_sub.fastq  M_disease.R2_sub.fastq
+B_control.R1_sub.fastq  E_control.R1_sub.fastq  H_disease.R1_sub.fastq  K_disease.R1_sub.fastq  N_disease.R1_sub.fastq
+B_control.R2_sub.fastq  E_control.R2_sub.fastq  H_disease.R2_sub.fastq  K_disease.R2_sub.fastq  N_disease.R2_sub.fastq
+C_control.R1_sub.fastq  F_control.R1_sub.fastq  I_disease.R1_sub.fastq  L_disease.R1_sub.fastq  O_disease.R1_sub.fastq
+C_control.R2_sub.fastq  F_control.R2_sub.fastq  I_disease.R2_sub.fastq  L_disease.R2_sub.fastq  O_disease.R2_sub.fastq
+ubuntu@ip-172-31-60-130:~/MCA/16s/Session1/fastqs$ ls -p -l
+total 23104
+-rw-r--r-- 1 ubuntu ubuntu 782917 Nov  8  2017 A_control.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 782917 Nov  8  2017 A_control.R2_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 782975 Nov  8  2017 B_control.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 782975 Nov  8  2017 B_control.R2_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 782914 Nov  8  2017 C_control.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 782914 Nov  8  2017 C_control.R2_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 782896 Nov  8  2017 D_control.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 782896 Nov  8  2017 D_control.R2_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 782939 Nov  8  2017 E_control.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 782939 Nov  8  2017 E_control.R2_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 782959 Nov  8  2017 F_control.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 782959 Nov  8  2017 F_control.R2_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 782927 Nov  8  2017 G_control.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 782927 Nov  8  2017 G_control.R2_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787672 Nov  8  2017 H_disease.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787672 Nov  8  2017 H_disease.R2_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787699 Nov  8  2017 I_disease.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787699 Nov  8  2017 I_disease.R2_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787685 Nov  8  2017 J_disease.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787685 Nov  8  2017 J_disease.R2_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787662 Nov  8  2017 K_disease.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787662 Nov  8  2017 K_disease.R2_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787679 Nov  8  2017 L_disease.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787679 Nov  8  2017 L_disease.R2_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787678 Nov  8  2017 M_disease.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787678 Nov  8  2017 M_disease.R2_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787702 Nov  8  2017 N_disease.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787702 Nov  8  2017 N_disease.R2_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787695 Nov  8  2017 O_disease.R1_sub.fastq
+-rw-r--r-- 1 ubuntu ubuntu 787695 Nov  8  2017 O_disease.R2_sub.fastq
+{% endhighlight %}
+
+Note that in the long format, there is one file listed per line, and each file has some associated information listed in columns. The first four columns won't be covered here. The fifth column gives the file size in bytes. The sixth column gives the date the file was last modified. The last column lists the file name. <br>
+
+Most commands have options, and they almost always start with `-` or `--`. To look at available options for a command, and to find other useful information, use `man`:
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/MCA/16s/Session1/fastqs$ cd ~
+ubuntu@ip-172-31-60-130:~$ man ls
+{% endhighlight %}
+
+This will take you to that manual page for the command. To exit, type `q`.
+
+![Manpage]({{ site.baseurl }}/images/manpage_ls.png)  
+
+To create a new directory, use `mkdir`, which stands for "make directory":
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~$ ls -p
+anaconda2/  local/  MCA/  R/
+ubuntu@ip-172-31-60-130:~$ mkdir test1
+ubuntu@ip-172-31-60-130:~$ mkdir test2
+ubuntu@ip-172-31-60-130:~$ ls -p
+anaconda2/  local/  MCA/  R/  test1/  test2/
+{% endhighlight %}
+
+
+
 mkdir
 cp/mv
 rm
@@ -109,7 +202,7 @@ Here, the `echo` command has taken the input text and directed it to our screen 
 
 {% endhighlight %}
 
-> Challenge 2.1: Create a text file called 'text_file1' that contains the line "Roses are red"<br>
+> Challenge 2.1: Create a text file called 'text_file1' that contains the line "Roses are red".<br>
 > Challenge 2.2: Try viewing the content of your file with the `cat` command: `cat text_file1`.
 
 Now what if you want to edit the file you just created? For this, we will use a basic [text editor][texteditor-wikipedia] called Nano. For details on how to use Nano, see the [online documentation][nano-homepage]. 
@@ -120,7 +213,7 @@ Now what if you want to edit the file you just created? For this, we will use a 
 
 ![Nano]({{ site.baseurl }}/images/NanoExample.png)
  
-> Challenge 2.3: Add a new line to your document: "Violets are blue"<br> 
+> Challenge 2.3: Add a new line to your document: "Violets are blue".<br> 
 > Challenge 2.4: Try saving the document, closing it, and re-opening it.<br>
 > Challenge 2.5: Using any method you'd like, create a second file called 'text_file2' that contains the rest of our poem:<br>
 >> There are trillions of bacteria<br>
