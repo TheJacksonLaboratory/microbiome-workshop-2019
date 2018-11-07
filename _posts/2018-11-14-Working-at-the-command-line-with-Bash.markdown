@@ -39,17 +39,9 @@ ubuntu@ip-172-31-60-130:~$ ls
 anaconda2  local  MCA  R
 ubuntu@ip-172-31-60-130:~$ ls -p
 anaconda2/  local/  MCA/  R/
-ubuntu@ip-172-31-60-130:~$ ls -l -p
-total 16
-drwxrwxr-x 22 ubuntu ubuntu 4096 Nov  6 13:28 anaconda2/
-drwxrwxr-x  4 ubuntu ubuntu 4096 Nov 15  2017 local/
-drwxrwxr-x  6 ubuntu ubuntu 4096 Nov 12  2017 MCA/
-drwxr-xr-x  3 ubuntu ubuntu 4096 Nov  8  2017 R/
-ubuntu@ip-172-31-60-130:~$
 {% endhighlight %}
 
-In the example above, you'll see that a few commands have been entered at the prompt. The first line is empty and just shows the prompt. The command `ls` was input in the second line, and the output of that command is shown directly below. The next line shows `ls` being used with a **option**, `-p`. Note how the output has been modified. Finally, `ls` is used with two options, `-l` and `-p`. Again, note how the output is modified by the options.<br>
-
+In the example above, you'll see that two commands have been entered. The first line is empty and just shows the prompt, which is indicated by the text ending in `$`. The command `ls` was input in the second line, and the output of that command is shown directly below. The next line shows `ls` being used with a **option**, `-p`. Note how the output has been modified.<br> 
 So what does `ls` do?<br>
 
 `ls` is an abbreviation for "list", and its purpose is to list the contents of a **directory**. In most operating systems, files are organized by a hierarchical directory structure. Directories are often called **folders** and are represented by a file folder in graphical operating system interfaces. Directories can contain both files and subdirectories, the latter of which may also contain additional files and subdirectories, and so on. Considering the following example in macOS:
@@ -58,11 +50,30 @@ So what does `ls` do?<br>
 
 Here, we are looking at the contents of a directory/folder called "microbiome-workshop-2018" (abbreviated as "microbio...hom-2018" by the browser). This directory contains several files (e.g., "donate.md") and serveral subdirectories (e.g., "images"); it is itself contained within a **parent directory** called "Dev", which is contained in its own parent directory called "djme", and so on.<br>
 
-So when we ran `ls` above, we showed the contents of a directory. But that was not terribly informative, because we don't know whether those contents were files or subdirectories. To get that information, we had to modify the `ls` command. By typing `-p` after `ls`, we changed the way that `ls` displays output. In this case, all of the contents were appended with a **forward slash**, `/`, which is a special character in Bash that indicates an item is a directory. Thus the purpose of the `-p` option is to append the `/` **only to directories**, and we learned that `anaconda2/`, `local/`, `MCA/`, and `R/` are all subdirectories. But subdirectories of what?<br>
+When we ran `ls` above, we showed the contents of a directory. But that was not terribly informative, because the output did not tell us whether the items listed were files or subdirectories. To get that information, we had to modify the `ls` command. By typing `-p` after `ls`, we changed the way that `ls` displays output. In this case, all of the contents were appended with a **forward slash**, `/`, which is a special character in Bash that indicates an item is a directory. Thus the purpose of the `-p` option is to append the `/` **only to directories**, so we learned that `anaconda2/`, `local/`, `MCA/`, and `R/` are all subdirectories. But subdirectories of what?<br>
 
-"""The first line shows only a prompt, indicating that the shell is waiting for input. Your shell may use different text for the prompt. Most importantly: when typing commands, either from these lessons or from other sources, do not type the prompt, only the commands that follow it.
-"""
+Whenever you are working at the prompt in the shell, you are always working "inside" of a directory. But the directory that you are in is not always obvious, especially when you first start up the shell. To determine your current **working directory**, you can use the command `pwd`, which is short for "print working directory".
 
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~$ pwd
+/home/ubuntu
+{% endhighlight %}
+
+In this example, `pwd` returned a **path**: `/home/ubuntu`. This path tells us that we are working in a directory called `ubuntu`, which itself is contained within a parent directory called `home`. Note that `home` is the first listed directory in the path--this means that the parent directory of `home` is the **root directory**, or the very base of the directory structure.<br>
+
+We can change our working directory with the command `cd`, which stands for "change directory":
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~$ ls -p
+anaconda2/  local/  MCA/  R/
+ubuntu@ip-172-31-60-130:~$ cd local
+ubuntu@ip-172-31-60-130:~/local$ pwd
+/home/ubuntu/local
+ubuntu@ip-172-31-60-130:~/local$ ls -p
+bin/  src/  usearch6.0.98_i86linux32
+{% endhighlight %}
 
 ls
 <options, including -h -a -l -p>
