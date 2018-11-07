@@ -171,11 +171,63 @@ ubuntu@ip-172-31-60-130:~$ ls -p
 anaconda2/  local/  MCA/  R/  test1/  test2/
 {% endhighlight %}
 
+`cp` and `mv` can be used to copy and move files, respectively. To test this, first create a 'blank' file using `touch`:
 
 
-mkdir
-cp/mv
-rm
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~$ cd test1
+ubuntu@ip-172-31-60-130:~/test1$ touch file1
+ubuntu@ip-172-31-60-130:~/test1$ ls -p
+file1
+{% endhighlight %}
+
+`cp` and move work similarly in that they take two strings of text, called **arguments**, the source file and the destination. For example:
+
+ 
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/test1$ cp file1 file2
+ubuntu@ip-172-31-60-130:~/test1$ ls -p
+file1  file2
+ubuntu@ip-172-31-60-130:~/test1$ mv file1 /home/ubuntu/test2
+ubuntu@ip-172-31-60-130:~/test1$ ls -p
+file2
+ubuntu@ip-172-31-60-130:~/test1$ cd /home/ubuntu/test2
+ubuntu@ip-172-31-60-130:~/test2$ ls
+file1
+{% endhighlight %}
+
+> Challenge 1.3: Create a new folder `~/test3` and move both files into it<br>
+> Challenge 1.4: Try renaming `file2` to something else. Hint: think about what `mv` does!
+
+Files can be removed with `rm`:
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/test2$ rm file1
+ubuntu@ip-172-31-60-130:~/test2$ ls
+ubuntu@ip-172-31-60-130:~/test2$ cd ~/test1
+ubuntu@ip-172-31-60-130:~/test1$ ls
+file2
+ubuntu@ip-172-31-60-130:~/test1$ rm file2
+ubuntu@ip-172-31-60-130:~/test1$ ls
+ubuntu@ip-172-31-60-130:~/test1$
+{% endhighlight %}
+
+Directories can be removed with `rmdir`:
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/test1$ cd ..
+ubuntu@ip-172-31-60-130:~$ ls -p
+anaconda2/  local/  MCA/  R/  test1/  test2/
+ubuntu@ip-172-31-60-130:~$ rmdir test1
+ubuntu@ip-172-31-60-130:~$ ls -p
+anaconda2/  local/  MCA/  R/  test2/
+ubuntu@ip-172-31-60-130:~$ rmdir test2
+ubuntu@ip-172-31-60-130:~$ ls -p
+anaconda2/  local/  MCA/  R/
+{% endhighlight %}
+
+> Challenge 1.5: What happens when you try to remove a directory with `rm`?
+> Challenge 1.6: What happens when you try to `rmdir` a directory that contains a file?
 
 <br>
 <br>
