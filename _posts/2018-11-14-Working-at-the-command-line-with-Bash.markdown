@@ -236,26 +236,26 @@ anaconda2/  local/  MCA/  R/
 ----------------------------------
 # 2. Creating and editing text files<a name="header2"></a>
 
-echo
-nano
-cat
-
 The Bash shell gives us access to several useful Unix utilites for working with text and text files. We'll start with a very simple command called `echo`, which simply repeats text back that is given as an argument. For example:
 
  
 {% highlight bash %}
-
+ubuntu@ip-172-31-60-130:~$ mkdir text_files
+ubuntu@ip-172-31-60-130:~$ cd text_files
+ubuntu@ip-172-31-60-130:~/text_files$ echo "Hello world!"
+Hello world!
 {% endhighlight %}
 
 Here, the `echo` command has taken the input text and directed it to our screen as **Standard Output**, or **stdout**. We can **redirect** stdout to a file using the `>` character. For example:
-
  
 {% highlight bash %}
-
+ubuntu@ip-172-31-60-130:~/text_files$ echo "Hello world!" > greeting.txt
+ubuntu@ip-172-31-60-130:~/text_files$ ls
+greeting.txt
 {% endhighlight %}
 
-> Challenge 2.1: Create a text file called 'text_file1' that contains the line "Roses are red".<br>
-> Challenge 2.2: Try viewing the content of your file with the `cat` command: `cat text_file1`.
+> Challenge 2.1: Create a text file called 'text_file1.txt' that contains the line "Roses are red".<br>
+> Challenge 2.2: Try viewing the content of your file with the `cat` command: `cat text_file1.txt`.
 
 Now what if you want to edit the file you just created? For this, we will use a basic [text editor][texteditor-wikipedia] called Nano. For details on how to use Nano, see the [online documentation][nano-homepage]. 
 
@@ -263,13 +263,38 @@ Now what if you want to edit the file you just created? For this, we will use a 
 
 {% endhighlight %}
 
-![Nano]({{ site.baseurl }}/images/NanoExample.png)
+![NanoBash]({{ site.baseurl }}/images/Bash_lesson_nano.png)
  
 > Challenge 2.3: Add a new line to your document: "Violets are blue".<br> 
 > Challenge 2.4: Try saving the document, closing it, and re-opening it.<br>
-> Challenge 2.5: Using any method you'd like, create a second file called 'text_file2' that contains the rest of our poem:<br>
+> Challenge 2.5: Create a second file called 'text_file2.txt' that contains the rest of our poem:<br>
 >> There are trillions of bacteria<br>
 >> Living on you!<br>
+
+You used the `cat` command above to view the contents of text_file1.txt. `cat` is short for concatenate, because it can operate on multiple files to concatenate the contents. For example:
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ cat text_file1.txt text_file2.txt
+Roses are red
+Violets are blue
+There are trillions of bacteria
+Living on you!
+
+{% endhighlight %}
+
+By redirecting the stdout from `cat` to a file, you can create a new text file that is a concatenation of the input text files:
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ cat greeting.txt text_file1.txt text_file2.txt > poem.txt
+ubuntu@ip-172-31-60-130:~/text_files$ cat poem.txt
+Hello world!
+Roses are red
+Violets are blue
+There are trillions of bacteria
+Living on you!
+
+{% endhighlight %}
 
 <br>
 <br>
