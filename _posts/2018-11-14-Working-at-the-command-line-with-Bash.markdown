@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Working at the command line with Bash" 
-date:   2018-11-06 12:00:00
+date:   2018-11-14 12:00:00
 categories: jekyll update
 ---
 
