@@ -611,6 +611,7 @@ To finish this section, lets now delete this empty directory:
 ubuntu@ip-172-31-60-130:~/text_files$ cd ..
 ubuntu@ip-172-31-60-130:~$ rmdir text_files/
 ubuntu@ip-172-31-60-130:~$ ls -p
+anaconda2/  local/  MCA/  R/
 {% endhighlight %}
 
 <br>
@@ -620,7 +621,66 @@ ubuntu@ip-172-31-60-130:~$ ls -p
 ----------------------------------
 # 6. Loops and scripts<a name="header6"></a>
 
+We've explored how Bash commands can be combined through the use of pipes, but we can also **script** a series of commands together to perform a task. Lets create a simple Bash script in nano:
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~$ nano count_ten.sh
+{% endhighlight %}
+
+![NanoScript]({{ site.baseurl }}/images/script_nano.png)
+
+There is a lot going on in that script so lets walk through it. This script contains a single FOR loop. This is a special construct for performing an iterative task. This particular FOR loop does the following:<br>
+
+1) It assigns a value to the variable `$NUM` from a list of values created by `{1..10}`. Bash knows that `{1..10}` means "create a list from 1 to 10". The first time through the loop, `$NUM` takes on the first value in the list, so the number 1. The next time through the loop, `$NUM` takes on the value 2, and so on.
+2) Using the current value for `$NUM`, the code between `do` and `done` is executed.
+3) If there are any values left in the `{1..10}` list, the `do`/`done` block will evaluate again with the next value. If the list has been completely run through, the loop finishes.
+
+We can see this in action, but to do so, we first need to indicate that `count_ten.sh` is an **executable** script. To do that, we use the `chmod` command. Don't worry too much about the details of what is going on with the `chmod` command itself--just note that change that it causes:
+
  
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~$ ls -lp
+total 20
+drwxrwxr-x 22 ubuntu ubuntu 4096 Nov  6 13:28 anaconda2/
+-rw-rw-r--  1 ubuntu ubuntu   38 Nov  9 19:49 count_ten.sh
+drwxrwxr-x  4 ubuntu ubuntu 4096 Nov 15  2017 local/
+drwxrwxr-x  6 ubuntu ubuntu 4096 Nov 12  2017 MCA/
+drwxr-xr-x  3 ubuntu ubuntu 4096 Nov  8  2017 R/
+ubuntu@ip-172-31-60-130:~$ chmod 775 count_ten.sh
+ubuntu@ip-172-31-60-130:~$ ls -lp
+total 20
+drwxrwxr-x 22 ubuntu ubuntu 4096 Nov  6 13:28 anaconda2/
+-rwxrwxr-x  1 ubuntu ubuntu   38 Nov  9 19:49 count_ten.sh
+drwxrwxr-x  4 ubuntu ubuntu 4096 Nov 15  2017 local/
+drwxrwxr-x  6 ubuntu ubuntu 4096 Nov 12  2017 MCA/
+drwxr-xr-x  3 ubuntu ubuntu 4096 Nov  8  2017 R/
+{% endhighlight %}
+
+Notice that the first column changed due to the `chmod 775` command. Specifically, an `x` appeared in the 4th, 7th, and 10th positions. This means that the script is now eXecutable to the file owner, anyone in the file owners group, and any user in any group, respectively. Making a file executable will also often make the file name print in  a different color when you inspect a directory with `ls`.<br>
+
+Lets take a look at one final example script:
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~$ nano make_folders.sh
+{% endhighlight %}
+
+
+![NanoScript2]({{ site.baseurl }}/images/script2_nano.png)
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~$ chmod 775 make_folders.sh
+ubuntu@ip-172-31-60-130:~$ ./make_folders.sh
+ubuntu@ip-172-31-60-130:~$ ls -p
+anaconda2/    folder1/  folder3/  folder5/  make_folders.sh  R/
+count_ten.sh  folder2/  folder4/  local/    MCA/
+ubuntu@ip-172-31-60-130:~$ cd folder1
+ubuntu@ip-172-31-60-130:~/folder1$ ls -p
+file
+{% endhighlight %}
+
+
 \ — continuous character
  
 comments #
@@ -631,29 +691,15 @@ do
  
 execution of program
 ./
-
+chmod
  
 <br>
 <br>
 <br>
-
-----------------------------------
-# 6. Miscellaneous<a name="header6"></a>
-
-
- 
-chmod 
-which
-awk
-
- 
-<br>
-<br>
-<br>
-
 
 [texteditor-wikipedia]: https://en.wikipedia.org/wiki/Text_editor
 [sc-url]: http://swcarpentry.github.io/shell-novice/
 [so-url]: https://stackoverflow.com
 [google-url]: https://www.google.com
+
 
