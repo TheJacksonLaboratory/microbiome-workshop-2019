@@ -571,6 +571,48 @@ In this example, the backticks resulted in `pwd` being run, and the output, whic
 ----------------------------------
 # 5. Wildcards<a name="header5"></a>
 
+Wildcards are special characters in Bash that can stand in for other characters. Two important wildcards are `*` and `?`. The `*` can stand in for any number of characters, whereas the `?` can stand in for any single character. For example:
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ cat text_file1.txt
+Roses are red
+Violets are blue
+ubuntu@ip-172-31-60-130:~/text_files$ cat text_file2.txt
+There are trillions of bacteria
+Living on you!
+
+ubuntu@ip-172-31-60-130:~/text_files$ cat text_file?.txt
+Roses are red
+Violets are blue
+There are trillions of bacteria
+Living on you!
+{% endhighlight %}
+
+In the example above, by using the `?` character, `text_file?.txt` was **expanded** to `text_file1.txt text_file2.txt`, so `cat` returned the text of both of them.
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ ls
+100-0.txt  greeting.txt  poem.txt  Romeo.txt  text_file1.txt  text_file2.txt
+ubuntu@ip-172-31-60-130:~/text_files$ rm text*
+ubuntu@ip-172-31-60-130:~/text_files$ ls
+100-0.txt  greeting.txt  poem.txt  Romeo.txt
+ubuntu@ip-172-31-60-130:~/text_files$ rm *.txt
+ubuntu@ip-172-31-60-130:~/text_files$ ls
+{% endhighlight %}
+
+In the above example, `rm text*` expanded to `rm text_file1.txt text_file2.txt`, so both of those files were removed. `rm *.txt` removed all of the files ending in `.txt`, which in this case was all of them.<br>
+
+To finish this section, lets now delete this empty directory:
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ cd ..
+ubuntu@ip-172-31-60-130:~$ rmdir text_files/
+ubuntu@ip-172-31-60-130:~$ ls -p
+{% endhighlight %}
+
 <br>
 <br>
 <br>
