@@ -545,7 +545,7 @@ ubuntu@ip-172-31-60-130:~$ $MyDirectory
 
 In this example, the text "pwd" was stored in the variable `$MyDirectory`, so when `$MyDirectory` was used on the next line, Bash automatically substituted "pwd" at the command line, which led to the execution of the `pwd` command. When we changed to the parent directory with `cd ..`, the output of `pwd` changed.<br>
 
-Sometimes, you might want to assign the *output* of a command to a variable, not the actual command itself. In this case, you can use backticks, `\``:
+Sometimes, you might want to assign the *output* of a command to a variable, not the actual command itself. In this case, you can use backticks, `` ` ``:
 
 
 {% highlight bash %}
