@@ -17,8 +17,7 @@ Details of the individual session components are included below:
 &nbsp;&nbsp;[5. Clustering unique sequences into operational taxonomic units](#header5) <br>
 &nbsp;&nbsp;[6. Creating a table of OTU abundance](#header6) <br>
 &nbsp;&nbsp;[7. Assigning taxonomy to OTU sequences](#header7) <br>
-&nbsp;&nbsp;[7. Assigning taxonomy to OTU sequences](#header7) <br>
-&nbsp;&nbsp;[8. Assigning taxonomy to OTU sequences](#header8) <br>
+&nbsp;&nbsp;[8. Amalgamating code into a pipeline script](#header8) <br>
 
 &nbsp;&nbsp;[Conclusions](#header9) <br>
 
@@ -424,10 +423,8 @@ This effectively creates a simple computational pipeline. As the resulting scrip
 any hardcoded sample names, it should be possible to run it on this and other datasets. In addition, 
 reproducible code is essential for [robust computational analysis][nature-biotech] 
 
-
-
-
-
+<br>
+<br>
 
 ----------------------------------
 # Conclusions<a name="header9"></a>
