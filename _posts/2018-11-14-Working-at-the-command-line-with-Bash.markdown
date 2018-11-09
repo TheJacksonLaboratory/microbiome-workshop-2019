@@ -471,6 +471,28 @@ Now Romeo is belov’d, and loves again,
 Romeo, the love I bear thee can afford
 {% endhighlight %}
 
+Now we can start to combine the commands we have learned to accomplish some pretty interesting tasks. For example, you can combing `grep` with `wc` to count instances of a word. To understand how to do this, you first need to know that the `-o` option of `grep` will return only matching text:
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ cat 100-0.txt | grep -o orange
+orange
+orange
+orange
+orange
+orange
+{% endhighlight %}
+
+So if you want to count the number of instances of the word orange in the complete works of Shakespeare (which is what the `100-0.txt` file actually is, in case you have not yet noticed), you can do the following:
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ cat 100-0.txt | grep -o orange | wc -w
+5
+{% endhighlight %}
+
+> Challenge 3.3: How many lines of `100-0.txt` contain "trouble"?
+> Challenge 3.4: By combining commands with pipes, come up a way to count the number of .txt files in a directory
 
 
 # 4. Variables and wildcards<a name="header4"></a>
