@@ -17,7 +17,7 @@
 title: Introduction to Microbial Community Analysis
 email: jethro.johnson@jax.org
 description: >- # this means to ignore newlines until "baseurl:"
-  Jackson Laboratory For Genomic Medicine 15th-17th November 2017
+  Jackson Laboratory For Genomic Medicine 14th-16th November 2018
 
 baseurl: "/microbiome-workshop-2018" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
