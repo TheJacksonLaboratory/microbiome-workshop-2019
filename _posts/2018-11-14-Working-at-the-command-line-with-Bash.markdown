@@ -400,7 +400,7 @@ Note that options can be used to return only the lines (`-l`), words (`-w`), or 
 {% highlight bash %}
 ubuntu@ip-172-31-60-130:~/text_files$ grep needle 100-0.txt
     First, for his weeping into the needless stream:
-    Their needless vouches? Custom calls me to't.
+    Their needless vouches? Custom calls me to\'t.
     Myself by with a needle, that I might prick
     Of space had pointed him sharp as my needle;
               With needless jealousy,
@@ -418,7 +418,7 @@ Or when she would with sharp needle wound,
 Go ply thy needle; meddle not with her.
 Valance of Venice gold in needlework;
 Marry, sir, with needle and thread.
-    They were the most needless creatures living, should we ne'er
+    They were the most needless creatures living, should we ne\'er
 That matter needless, of importless burden,
 As will stop the eye of Helen’s needle, for whom he comes to fight.
     At each his needless heavings- such as you
