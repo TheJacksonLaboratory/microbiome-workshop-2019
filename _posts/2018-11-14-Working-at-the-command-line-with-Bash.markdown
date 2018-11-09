@@ -491,18 +491,80 @@ ubuntu@ip-172-31-60-130:~/text_files$ cat 100-0.txt | grep -o orange | wc -w
 5
 {% endhighlight %}
 
-> Challenge 3.3: How many lines of `100-0.txt` contain "trouble"?
+> Challenge 3.3: How many lines of `100-0.txt` contain "trouble"?<br>
 > Challenge 3.4: By combining commands with pipes, come up a way to count the number of .txt files in a directory
 
 
 # 4. Variables and wildcards<a name="header4"></a>
 
-variable
-${VARNAME}
-backticks ` `
-date
-wildcards *
+Text can be assigned to variables and used later in Bash. For example:
 
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ greeting="Hello!"
+ubuntu@ip-172-31-60-130:~/text_files$ echo $greeting
+Hello!
+ubuntu@ip-172-31-60-130:~/text_files$ echo greeting
+greeting
+{% endhighlight %}
+
+In this example, we assigned the text `"Hello!"` to the variable `greeting`. Notice that to use the variable later with `echo`, we had to use the `$` character. You can use variables in combination with other input too:
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ echo $greeting World!
+Hello! World!
+{% endhighlight %}
+
+However, whitespace matters when referencing variables:
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ echo $greeting How are you?
+Hello! How are you?
+ubuntu@ip-172-31-60-130:~/text_files$ echo $greetingHow are you?
+are you?
+{% endhighlight %}
+
+Notice in the first example, everything worked as expected. But not in the second case. This is because `$greetingHow` was seen as one variable, which was empty, so `echo` only printed `are you?`. In these cases, you can use curly braces, `{}`, to clarify which text belongs to the variable name:
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ echo ${greeting}How are you?
+Hello!How are you?
+{% endhighlight %}
+
+Because commands in Bash are text, you can store commands in variables too:
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ MyDirectory=pwd
+ubuntu@ip-172-31-60-130:~/text_files$ $MyDirectory
+/home/ubuntu/text_files
+ubuntu@ip-172-31-60-130:~/text_files$ cd ..
+ubuntu@ip-172-31-60-130:~$ $MyDirectory
+/home/ubuntu
+{% endhighlight %}
+
+In this example, the text "pwd" was stored in the variable `$MyDirectory`, so when `$MyDirectory` was used on the next line, Bash automatically substituted "pwd" at the command line, which led to the execution of the `pwd` command. When we changed to the parent directory with `cd ..`, the output of `pwd` changed.<br>
+
+Sometimes, you might want to assign the *output* of a command to a variable, not the actual command itself. In this case, you can use backticks, `\``:
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~$ cd text_files/
+ubuntu@ip-172-31-60-130:~/text_files$ homebase=`pwd`
+ubuntu@ip-172-31-60-130:~/text_files$ $homebase
+bash: /home/ubuntu/text_files: Is a directory
+ubuntu@ip-172-31-60-130:~/text_files$ echo $homebase
+/home/ubuntu/text_files
+ubuntu@ip-172-31-60-130:~/text_files$ cd ..
+ubuntu@ip-172-31-60-130:~$ echo $homebase
+/home/ubuntu/text_files
+ubuntu@ip-172-31-60-130:~$ cd $homebase
+ubuntu@ip-172-31-60-130:~/text_files$
+{% endhighlight %}
+
+In this example, the backticks resulted in `pwd` being run, and the output, which was the text "/home/ubuntu/text_files", was saved in the variable `$homebase`. When `$homebase` was used by itself of the next line, Bash gave an error, because Bash does not take paths as commands by themselves. By using `echo`, we verified which text was being stored in `$homebase`. This text did not change when we changed directories. Thus when `$homebase` was used with `cd`, we changed to the directory that we were working in when we assigned the output of `pwd` to `$homebase` in the first place. 
+
+wildcards *
 
 <br>
 <br>
