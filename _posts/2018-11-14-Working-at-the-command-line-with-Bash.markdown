@@ -455,16 +455,23 @@ Thus far, we have been using only one command at a time. However, the true power
 
 Lets take a look at an example using `grep`. 
 
-
 {% highlight bash %}
 ubuntu@ip-172-31-60-130:~/text_files$ grep Romeo 100-0.txt | grep love
 Now Romeo is belov’d, and loves again,
 Romeo, the love I bear thee can afford
 {% endhighlight %}
 
+In this example, we ran the `grep Romeo 100-0.txt` command, which searches the file `100-0.txt` for the text "Romeo". Usually, this will send the output to your screen through **stdout**. However, the pipe `|` redirects that output to a second `grep`, which is searching for "love". Notice that no file is specified for the second command. This is because it is instead operating on **standard input**, or **stdin**. So what the `|` actually does is take the stdout of one command and send it to another command as stdin.<br>
 
-running a command with inputs with redirection
-|
+Another way to accomplish the above example is by starting with `cat`:
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ cat 100-0.txt | grep Romeo | grep love
+Now Romeo is belov’d, and loves again,
+Romeo, the love I bear thee can afford
+{% endhighlight %}
+
+
 
 # 4. Variables and wildcards<a name="header4"></a>
 
