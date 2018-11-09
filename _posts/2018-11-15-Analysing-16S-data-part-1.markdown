@@ -17,8 +17,10 @@ Details of the individual session components are included below:
 &nbsp;&nbsp;[5. Clustering unique sequences into operational taxonomic units](#header5) <br>
 &nbsp;&nbsp;[6. Creating a table of OTU abundance](#header6) <br>
 &nbsp;&nbsp;[7. Assigning taxonomy to OTU sequences](#header7) <br>
+&nbsp;&nbsp;[7. Assigning taxonomy to OTU sequences](#header7) <br>
+&nbsp;&nbsp;[8. Assigning taxonomy to OTU sequences](#header8) <br>
 
-&nbsp;&nbsp;[Conclusions](#header8) <br>
+&nbsp;&nbsp;[Conclusions](#header9) <br>
 
 <br>
 <br>
@@ -90,6 +92,7 @@ CCCCCGFGGGGGGFCFFGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGFGGFGGGGGGGGGG
 {% endhighlight %}
 
 > What information is contained in each line of the fastq? 
+> How are the reads in *_R1_sub.fastq files matched to their corresponding pair in *_R2_sub.fastq?
 
 For further detail on the contents of fastq files, see [`here`][fastq-wikipedia].
 <br>
@@ -117,6 +120,7 @@ ls
 
 > Have a look at the files created by FLASh, in particular the file out.extendedFrags.fastq<br>
 > Are all sequences the same length?
+> How many sequences were successfully assembled and how many failed to assemble? 
 
 For information on options for running FLASh and the files it creates visit the
 [website][flash-website], or access the help documentation on the command line.
@@ -224,8 +228,10 @@ cat all_samples.fasta | grep ">" | wc -l
 usearch -fastx_uniques all_samples.fasta -fastaout all_unique_seqs.fasta -sizeout
 {% endhighlight %}
 
-> How many unique sequences remain after removing duplicate copies?
-> Have a look at the first four lines of `all_unique_seqs.fasta` to see where sizeout is recorded.
+> How many unique sequences remain after removing duplicate copies?<br>
+> Have a look at the first four lines of `all_unique_seqs.fasta` to see where sizeout is recorded.<br>
+> What is different about the first four lines of `all_unique_seqs.fasta` compared to previous fasta
+> files we've looked at?
 
 <br>
 
@@ -337,7 +343,8 @@ sequences in each sample that match each OTU.
 # find the location of the python script usearch2otutab.py
 which uc2otutab.py
 
-# call this script from it's installed location using python
+# As this is a script, not an executable progam we will run it
+# from it's installed location using python
 python ~/local/bin/uc2otutab.py otu_map.uc > otu_matrix.tsv
 {% endhighlight %}
 
@@ -407,7 +414,23 @@ less ~/local/src/rdp_classifier_2.12/README
 <br>
 
 ----------------------------------
-# Conclusions<a name="header8"></a>
+# 8. Amalgamating code into a pipeline script<a name="header8"></a>
+
+Finally, having worked out how to  run each of the steps necssary to generate an OTU count table,
+it should now be possible to take the code for each step and add it to the script
+`16s_pipeline.sh`.
+
+This effectively creates a simple computational pipeline. As the resulting script does not contain
+any hardcoded sample names, it should be possible to run it on this and other datasets. In addition, 
+reproducible code is essential for [robust computational analysis][nature-biotech] 
+
+
+
+
+
+
+----------------------------------
+# Conclusions<a name="header9"></a>
 
 This session provides an overview of the fundamental steps taken to process 16S gene
 sequence data from raw reads to a taxonomic abundance table that can be used for downstream
@@ -438,6 +461,7 @@ of reproducibility in modern biological research see [here][nbiotech-article].
 [usearch-chimera]: https://www.drive5.com/usearch/manual/chimera_formation.html
 [chimeraslayer-home]: http://microbiomeutil.sourceforge.net/#A_CS
 [usearch-clusterformat]: https://www.drive5.com/usearch/manual/opt_uc.html
+[nature-biotech]: https://www.nature.com/articles/nbt.2740
 [mothur-sop]: https://www.mothur.org/wiki/MiSeq_SOP
 [qiime-tutorials]: http://qiime.org/tutorials/
 [tornado-tutorial]: http://acai.igb.uiuc.edu/bio/tutorial.html
