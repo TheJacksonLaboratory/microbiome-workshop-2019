@@ -422,7 +422,7 @@ Marry, sir, with needle and thread.
 That matter needless, of importless burden,
 As will stop the eye of Helen’s needle, for whom he comes to fight.
     At each his needless heavings- such as you
-Lucretia's glove, wherein her needle sticks;
+Lucretias glove, wherein her needle sticks;
 {% endhighlight %}
 
 > Challenge 3.1: Create a new file called `Romeo.txt` that contains only lines from `100-0.txt` with the word "Romeo"
