@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Analysing 16S data: Part 2"
-date:   2018-11-16 06:00:00
+date:   2018-11-16 08:00:00
 categories: jekyll update
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Analysing mWGS data"
-date:   2018-11-17 06:00:00
+date:   2018-11-16 06:00:00
 categories: jekyll update
 ---
 
@@ -107,8 +107,9 @@ Try running Metaphlan2 for a single sample.
 cd ~/MCA/mWGS/
 pwd
 
-# Before running Metaphlan2, lets see what time it is? 
-date
+# Before running Metaphlan2, lets have a look at the time utility
+man time
+
 
 # Run Metaphlan2, providing a single sample as input
 metaphlan2.py fastqs/MET0109.subsample.fastq --input_type fastq >  MET0109_metagenome_profile.tsv
