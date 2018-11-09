@@ -16,9 +16,9 @@ Details of the individual session components are included below:
 &nbsp;&nbsp;[1. Getting started with the shell](#header1) <br>
 &nbsp;&nbsp;[2. Creating and editing text files](#header2) <br>
 &nbsp;&nbsp;[3. Running commands and managing output](#header3) <br>
-&nbsp;&nbsp;[4. Variables and wildcards](#header4) <br>
-&nbsp;&nbsp;[5. Loops and scripts](#header5) <br>
-&nbsp;&nbsp;[6. Miscellaneous](#header6) <br>
+&nbsp;&nbsp;[4. Variables](#header4) <br>
+&nbsp;&nbsp;[5. Wildcards](#header5) <br>
+&nbsp;&nbsp;[6. Loops and scripts](#header6) <br>
 
 
 <br>
@@ -495,7 +495,7 @@ ubuntu@ip-172-31-60-130:~/text_files$ cat 100-0.txt | grep -o orange | wc -w
 > Challenge 3.4: By combining commands with pipes, come up a way to count the number of .txt files in a directory
 
 
-# 4. Variables and wildcards<a name="header4"></a>
+# 4. Variables<a name="header4"></a>
 
 Text can be assigned to variables and used later in Bash. For example:
 
@@ -562,16 +562,21 @@ ubuntu@ip-172-31-60-130:~$ cd $homebase
 ubuntu@ip-172-31-60-130:~/text_files$
 {% endhighlight %}
 
-In this example, the backticks resulted in `pwd` being run, and the output, which was the text "/home/ubuntu/text_files", was saved in the variable `$homebase`. When `$homebase` was used by itself of the next line, Bash gave an error, because Bash does not take paths as commands by themselves. By using `echo`, we verified which text was being stored in `$homebase`. This text did not change when we changed directories. Thus when `$homebase` was used with `cd`, we changed to the directory that we were working in when we assigned the output of `pwd` to `$homebase` in the first place. 
-
-wildcards *
+In this example, the backticks resulted in `pwd` being run, and the output, which was the text "/home/ubuntu/text_files", was saved in the variable `$homebase`. When `$homebase` was used by itself of the next line, Bash gave an error, because Bash does not take paths as commands by themselves. By using `echo`, we verified which text was being stored in `$homebase`. This text did not change when we changed directories. Thus when `$homebase` was used with `cd`, we changed to the directory that we were working in when we assigned the output of `pwd` to `$homebase` in the first place.<br> 
 
 <br>
 <br>
 <br>
 
 ----------------------------------
-# 5. Loops and scripts<a name="header5"></a>
+# 5. Wildcards<a name="header5"></a>
+
+<br>
+<br>
+<br>
+
+----------------------------------
+# 6. Loops and scripts<a name="header6"></a>
 
  
 \ — continuous character
