@@ -236,26 +236,26 @@ anaconda2/  local/  MCA/  R/
 ----------------------------------
 # 2. Creating and editing text files<a name="header2"></a>
 
-echo
-nano
-cat
-
 The Bash shell gives us access to several useful Unix utilites for working with text and text files. We'll start with a very simple command called `echo`, which simply repeats text back that is given as an argument. For example:
 
  
 {% highlight bash %}
-
+ubuntu@ip-172-31-60-130:~$ mkdir text_files
+ubuntu@ip-172-31-60-130:~$ cd text_files
+ubuntu@ip-172-31-60-130:~/text_files$ echo "Hello world!"
+Hello world!
 {% endhighlight %}
 
 Here, the `echo` command has taken the input text and directed it to our screen as **Standard Output**, or **stdout**. We can **redirect** stdout to a file using the `>` character. For example:
-
  
 {% highlight bash %}
-
+ubuntu@ip-172-31-60-130:~/text_files$ echo "Hello world!" > greeting.txt
+ubuntu@ip-172-31-60-130:~/text_files$ ls
+greeting.txt
 {% endhighlight %}
 
-> Challenge 2.1: Create a text file called 'text_file1' that contains the line "Roses are red".<br>
-> Challenge 2.2: Try viewing the content of your file with the `cat` command: `cat text_file1`.
+> Challenge 2.1: Create a text file called `text_file1.txt` that contains the line "Roses are red".<br>
+> Challenge 2.2: Try viewing the content of your file with the `cat` command: `cat text_file1.txt`.
 
 Now what if you want to edit the file you just created? For this, we will use a basic [text editor][texteditor-wikipedia] called Nano. For details on how to use Nano, see the [online documentation][nano-homepage]. 
 
@@ -263,13 +263,38 @@ Now what if you want to edit the file you just created? For this, we will use a 
 
 {% endhighlight %}
 
-![Nano]({{ site.baseurl }}/images/NanoExample.png)
+![NanoBash]({{ site.baseurl }}/images/Bash_lesson_nano.png)
  
 > Challenge 2.3: Add a new line to your document: "Violets are blue".<br> 
 > Challenge 2.4: Try saving the document, closing it, and re-opening it.<br>
-> Challenge 2.5: Using any method you'd like, create a second file called 'text_file2' that contains the rest of our poem:<br>
+> Challenge 2.5: Create a second file called `text_file2.txt` that contains the rest of our poem:<br>
 >> There are trillions of bacteria<br>
 >> Living on you!<br>
+
+You used the `cat` command above to view the contents of `text_file1.txt.` `cat` is short for concatenate, because it can operate on multiple files to concatenate the contents. For example:
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ cat text_file1.txt text_file2.txt
+Roses are red
+Violets are blue
+There are trillions of bacteria
+Living on you!
+
+{% endhighlight %}
+
+By redirecting the stdout from `cat` to a file, you can create a new text file that is a concatenation of the input text files:
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ cat greeting.txt text_file1.txt text_file2.txt > poem.txt
+ubuntu@ip-172-31-60-130:~/text_files$ cat poem.txt
+Hello world!
+Roses are red
+Violets are blue
+There are trillions of bacteria
+Living on you!
+
+{% endhighlight %}
 
 <br>
 <br>
@@ -278,25 +303,168 @@ Now what if you want to edit the file you just created? For this, we will use a 
 ----------------------------------
 # 3. Running commands and managing output<a name="header3"></a> 
 
-As mentioned above, Bash gives you access to dozens of small programs that are very useful for dealing with text files. A few examples are:
+As mentioned above, Bash gives you access to dozens of small programs that are very useful for dealing with text files. Because these tools are at their most powerful when working with large text files, lets grab one using `wget` ("World Wide Web get").
 
-`grep`
-grep lets you perform searches on your text files. For example:
-
+ 
 {% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ wget http://www.gutenberg.org/files/100/100-0.txt
+--2018-11-08 21:10:26--  http://www.gutenberg.org/files/100/100-0.txt
+Resolving www.gutenberg.org (www.gutenberg.org)... 152.19.134.47, 2610:28:3090:3000:0:bad:cafe:47
+Connecting to www.gutenberg.org (www.gutenberg.org)|152.19.134.47|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5852404 (5.6M) [text/plain]
+Saving to: ‘100-0.txt’
 
+100-0.txt                        100%[=========================================================>]   5.58M  21.0MB/s    in 0.3s
+
+2018-11-08 21:10:26 (21.0 MB/s) - ‘100-0.txt’ saved [5852404/5852404]
+
+ubuntu@ip-172-31-60-130:~/text_files$ ls -hl
+total 5.6M
+-rw-rw-r-- 1 ubuntu ubuntu 5.6M Jun 14 15:16 100-0.txt
+-rw-rw-r-- 1 ubuntu ubuntu   13 Nov  8 20:26 greeting.txt
+-rw-rw-r-- 1 ubuntu ubuntu   92 Nov  8 20:41 poem.txt
+-rw-rw-r-- 1 ubuntu ubuntu   31 Nov  8 20:38 text_file1.txt
+-rw-rw-r-- 1 ubuntu ubuntu   48 Nov  8 20:36 text_file2.txt
 {% endhighlight %}
 
-stderr
-stdout
-head -4
-wc -l
-less
-grep -v (exclude)
+Note that the `-h` option was used with `ls` in the above example. This option makes the file size information "human readable". You can see that the file that was downloaded, `100-0.txt`, is about 5.6 megabytes. That's a big text file! Using `cat` on this file is not very useful to inspect its contents (give it a try and you'll see).<br> 
+
+One nice option for browsing very large text files is `less` (usage example: `$ less 100-0.txt`; to exit, type the letter q). This displays one screen's worth of the file contents and allows you to scroll through. However, this is still inefficient, depending on what you want to do with the text.<br>
+
+If you just want to check out the first few lines of text, you can try `head`:
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ head 100-0.txt
+
+Project Gutenberg’s The Complete Works of William Shakespeare, by William
+Shakespeare
+
+This eBook is for the use of anyone anywhere in the United States and
+most other parts of the world at no cost and with almost no restrictions
+whatsoever.  You may copy it, give it away or re-use it under the terms
+of the Project Gutenberg License included with this eBook or online at
+www.gutenberg.org.  If you are not located in the United States, you’ll
+have to check the laws of the country where you are located before using
+{% endhighlight %}
+
+You can specify the number of lines you want to inspect by supplying an option (an integer):
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ head -3 100-0.txt
+
+Project Gutenberg’s The Complete Works of William Shakespeare, by William
+Shakespeare
+ubuntu@ip-172-31-60-130:~/text_files$ head -20 100-0.txt
+
+Project Gutenberg’s The Complete Works of William Shakespeare, by William
+Shakespeare
+
+This eBook is for the use of anyone anywhere in the United States and
+most other parts of the world at no cost and with almost no restrictions
+whatsoever.  You may copy it, give it away or re-use it under the terms
+of the Project Gutenberg License included with this eBook or online at
+www.gutenberg.org.  If you are not located in the United States, you’ll
+have to check the laws of the country where you are located before using
+this ebook.
+
+See at the end of this file: * CONTENT NOTE (added in 2017) *
+
+
+Title: The Complete Works of William Shakespeare
+
+Author: William Shakespeare
+
+Release Date: January 1994 [EBook #100]
+{% endhighlight %}
+
+Another very useful command for inspecting a text file is `wc`, which stands for "word count". This lists the lines, words, and characters in your text file:
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ wc 100-0.txt
+ 149689  959894 5852404 100-0.txt
+ubuntu@ip-172-31-60-130:~/text_files$ wc -l 100-0.txt
+149689 100-0.txt
+ubuntu@ip-172-31-60-130:~/text_files$ wc -w 100-0.txt
+959894 100-0.txt
+ubuntu@ip-172-31-60-130:~/text_files$ wc -c 100-0.txt
+5852404 100-0.txt
+{% endhighlight %}
+
+Note that options can be used to return only the lines (`-l`), words (`-w`), or characters (`-c`) in the file.
+
+`grep` is a particularly powerful command, because it allows you to filter lines of text using input strings. For example, if I want to return only lines from `100-0.txt` that contain the word "needle", I can do this:
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ grep needle 100-0.txt
+    First, for his weeping into the needless stream:
+    Their needless vouches? Custom calls me to't.
+    Myself by with a needle, that I might prick
+    Of space had pointed him sharp as my needle;
+              With needless jealousy,
+    their needles, but it will be thought we keep a bawdy-house
+    Their needles to lances, and their gentle hearts
+    When with a volley of our needless shot,
+maledictions against King and nobles; needless diffidences, banishment
+  KATHARINE. How needless was it then to ask the question!
+  ISABELLA. In brief- to set the needless process by,
+    Have with our needles created both one flower,
+    needle, an admirable musician. O, she will sing the savageness
+Or when she would with sharp needle wound,
+    To thread the postern of a small needle's eye.'
+    Pray God, I say, I prove a needless coward.
+Go ply thy needle; meddle not with her.
+Valance of Venice gold in needlework;
+Marry, sir, with needle and thread.
+    They were the most needless creatures living, should we ne'er
+That matter needless, of importless burden,
+As will stop the eye of Helen’s needle, for whom he comes to fight.
+    At each his needless heavings- such as you
+Lucretia's glove, wherein her needle sticks;
+{% endhighlight %}
+
+> Challenge 3.1: Create a new file called `Romeo.txt` that contains only lines from `100-0.txt` with the word "Romeo"
+> Challenge 3.2: How many lines, words, and characters are in `Romeo.txt`?
+
+`grep` also has an option, `-v` that will return only lines that *don't* contain the input string. For example, if I want to only return lines from `Romeo.txt` that do not contain the letter "t", I could do this:
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ grep -v t Romeo.txt
+Now Romeo is belov’d, and loves again,
+Romeo! My cousin Romeo! Romeo!
+Romeo! Humours! Madman! Passion! Lover!
+Romeo.
+Here comes Romeo, here comes Romeo!
+Romeo, away, be gone!
+Give me my Romeo, and when I shall die,
+Romeo can,
+All slain, all dead. Romeo is banished,
+Where is my lady’s lord, where’s Romeo?
+Romeo is coming.
+Ere I again behold my Romeo.
+Romeo.
+Romeo! [_Advances._]
+ [_Falls on Romeo’s body and dies._]
+As rich shall Romeo’s by his lady’s lie,
+{% endhighlight %}
+
+Thus far, we have been using only one command at a time. However, the true power of Unix-based operating systems comes from the ability to string multiple commands in succession. This is called a **pipeline** and is acheived by redirecting the output of one command to the input of another command through the use of the **pipe** character, `|`.<br>
+
+Lets take a look at an example using `grep`. 
+
+
+{% highlight bash %}
+ubuntu@ip-172-31-60-130:~/text_files$ grep Romeo 100-0.txt | grep love
+Now Romeo is belov’d, and loves again,
+Romeo, the love I bear thee can afford
+{% endhighlight %}
+
+
 running a command with inputs with redirection
 |
-> - “redirect"
-&>
 
 # 4. Variables and wildcards<a name="header4"></a>
 
