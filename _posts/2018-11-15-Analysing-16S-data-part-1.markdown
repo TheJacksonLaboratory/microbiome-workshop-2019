@@ -421,7 +421,7 @@ it should now be possible to take the code for each step and add it to the scrip
 
 This effectively creates a simple computational pipeline. As the resulting script does not contain
 any hardcoded sample names, it should be possible to run it on this and other datasets. In addition, 
-reproducible code is essential for [robust computational analysis][nature-biotech] 
+clear record of the code that has been run is essential for reproducible computational analysis.
 
 <br>
 <br>
@@ -458,7 +458,6 @@ of reproducibility in modern biological research see [here][nbiotech-article].
 [usearch-chimera]: https://www.drive5.com/usearch/manual/chimera_formation.html
 [chimeraslayer-home]: http://microbiomeutil.sourceforge.net/#A_CS
 [usearch-clusterformat]: https://www.drive5.com/usearch/manual/opt_uc.html
-[nature-biotech]: https://www.nature.com/articles/nbt.2740
 [mothur-sop]: https://www.mothur.org/wiki/MiSeq_SOP
 [qiime-tutorials]: http://qiime.org/tutorials/
 [tornado-tutorial]: http://acai.igb.uiuc.edu/bio/tutorial.html
