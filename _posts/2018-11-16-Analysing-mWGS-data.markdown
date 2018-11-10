@@ -86,9 +86,11 @@ samples by<br>
 2. [normalizing][chan-normalization] counts to account for differences in sequencing effort 
 (i.e. total number of reads generated) for each sample.
 <br>
- Similarly, relative abundance of two different taxa can be compared within a sample by<br>
-1. counting the number of reads mapped to each reference sequence, and<br>
-2. normalizing to account for differences in reference sequence length.<br>
+
+Similarly, relative abundance of two different taxa can be compared within a sample by<br>
+1. counting the number of reads mapped to each reference sequence, and
+2. normalizing to account for differences in reference sequence length.
+
 Typically data normalization is carried out to enable comparison of taxon abundance between and 
 within samples. The result is that read counts are reported as fragments reads per kilobase,
 per million reads, or RPKM.
