@@ -81,13 +81,13 @@ that coverage of different bacterial genomes may not be even. The genomes of som
 
 Most common approaches for quantifying bacteria with mWGS data involve mapping reads to databases
 of reference genes or genomes. Relative abundance of a single taxon can then be compared across
-samples by<br>
+samples by:<br>
 1.  counting the number of reads mapped to its reference sequence within each sample, and
 2. [normalizing][chan-normalization] counts to account for differences in sequencing effort 
 (i.e. total number of reads generated) for each sample.
 <br>
 
-Similarly, relative abundance of two different taxa can be compared within a sample by<br>
+Similarly, relative abundance of two different taxa can be compared within a sample by:<br>
 1. counting the number of reads mapped to each reference sequence, and
 2. normalizing to account for differences in reference sequence length.
 
@@ -115,12 +115,8 @@ pwd
 # Before running Metaphlan2, lets have a look at the time utility
 man time
 
-
 # Run Metaphlan2, providing a single sample as input
-metaphlan2.py fastqs/MET0109.subsample.fastq --input_type fastq >  MET0109_metagenome_profile.tsv
-
-# How long did Metaphlan2 take to run? 
-date
+time metaphlan2.py fastqs/MET0109.subsample.fastq --input_type fastq >  MET0109_metagenome_profile.tsv
 
 # Have a look at the principal output of Metaphlan2
 less MET0109_metagenome_profile.tsv
@@ -193,6 +189,7 @@ done
 {% endhighlight %}
 
      ### Alternative to running the above code ###
+
 # Copy the output directory from backup
 cp -r ~/MCA/backup/mWGS/metaphlan2_profiles .
 
