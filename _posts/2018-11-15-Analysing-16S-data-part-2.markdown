@@ -186,6 +186,8 @@ m_prop <- prop.table(m_count, margin=2)
 df_count_prop <- as.data.frame(m_prop)
 head(df_count_prop)
 
+colSums(df_count_prop)
+
 {% endhighlight %}
 
 For discussion of the issues surrounding rarefying data (including disambiguation of the terms
@@ -315,10 +317,15 @@ plot_richness(physeq, color='Condition')
 
 # Plot alpha diversity for normalized dataset
 plot_richness(physeq_norm, color='Condition')
+
+# Note, it's also possible to extract the alpha diversity estimates for further analysis
+estimate_richness(physeq, measures=c("Chao1", "Shannon"))
 {% endhighlight %}
 
 > Which alpha diversity measures alter between the normalized and un-normalized data sets?<br>
 > Which data set returns the correct alpha diversity metrics? 
+
+
 
 <br>
 <br>
@@ -342,6 +349,8 @@ diversity.
 {% highlight R %}
 # It is possible to generate a distance matrix in phyloseq
 dist_norm <- phyloseq::distance(physeq_norm, method='bray')
+dist_norm
+
 
 # Plot beta diversity in phyloseq (DM generated implicitly)
 # First it's necessary to perform the ordination
