@@ -116,7 +116,10 @@ pwd
 man time
 
 # Run Metaphlan2, providing a single sample as input
-time metaphlan2.py fastqs/MET0109.subsample.fastq --input_type fastq >  MET0109_metagenome_profile.tsv
+time metaphlan2.py fastqs/MET0109.subsample.fastq \
+  --input_type fastq \
+  --bowtie2out MET0109.subsample.fastq.bowtie2out.txt\
+  >  MET0109_metagenome_profile.tsv
 
 # Have a look at the principal output of Metaphlan2
 less MET0109_metagenome_profile.tsv
