@@ -421,7 +421,8 @@ it should now be possible to take the code for each step and add it to the scrip
 
 This effectively creates a simple computational pipeline. As the resulting script does not contain
 any hardcoded sample names, it should be possible to run it on this and other datasets. In addition, 
-clear record of the code that has been run is essential for reproducible computational analysis.
+a clear and well documented record of the code that has been run is essential for reproducible
+computational analysis.
 
 <br>
 <br>

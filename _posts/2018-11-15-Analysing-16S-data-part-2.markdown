@@ -74,6 +74,26 @@ the console.
 print("Hello R")
 # With the cursor on the same line as the print command, press Ctrl + Return
 {% endhighlight %}
+
+In the first half of this session, we were running tools (e.g. USEARCH) from within the working
+directory: `~/MCA/16s/Session1`. We have just created a new working directory for the second half
+of the session: `~/MCA/16s/Session1.2`. We now need to make sure that RStudio is running within
+our current working directory. 
+
+{% highlight R %}
+# Find out which working directory R is running in? 
+getwd()
+
+# See which files are present in this working directory
+list.files('.')
+
+# Change the directory to the working directory for the current session
+setwd('~/MCA/16s/Session1.2')
+
+# Make sure that the otu count matrix and taxonomy file are present in the working directory
+list.files('.')
+{% endhighlight %}
+
  
 > Please ask if you have any further questions about working in RStudio.
 
