@@ -117,8 +117,8 @@ man time
 
 # Run Metaphlan2, providing a single sample as input
 time metaphlan2.py fastqs/MET0109.subsample.fastq \
-  --input_type fastq \
-  --bowtie2out MET0109.subsample.fastq.bowtie2out.txt\
+   --input_type fastq \
+   --bowtie2out MET0109.subsample.fastq.bowtie2out.txt \
   >  MET0109_metagenome_profile.tsv
 
 # Have a look at the principal output of Metaphlan2
@@ -191,11 +191,14 @@ do
 done
 {% endhighlight %}
 
+
+{% highlight bash %}
      ### Alternative to running the above code ###
 
 # Copy the output directory from backup
 cp -r ~/MCA/backup/mWGS/metaphlan2_profiles .
-
+{% endhighlight %
+}
 <br>
 
 Finally, Metaphlan2 also provides a python script that can be used to merge data for different
