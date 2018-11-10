@@ -82,12 +82,13 @@ that coverage of different bacterial genomes may not be even. The genomes of som
 Most common approaches for quantifying bacteria with mWGS data involve mapping reads to databases
 of reference genes or genomes. Relative abundance of a single taxon can then be compared across
 samples by<br>
-	 i) counting the number of reads mapped to its reference sequence within each sample, and<br>
-	 ii) [normalizing][chan-normalization] counts to account for differences in sequencing effort 
-(i.e. total number of reads generated) for each sample.<br>
- Similarly, relative abundance of two different taxa can be compared within a sample by
-  i) counting the number of reads mapped to each reference sequence, and<br>
-  ii) normalizing to account for differences in reference sequence length.<br>
+1.  counting the number of reads mapped to its reference sequence within each sample, and
+2. [normalizing][chan-normalization] counts to account for differences in sequencing effort 
+(i.e. total number of reads generated) for each sample.
+<br>
+ Similarly, relative abundance of two different taxa can be compared within a sample by<br>
+1. counting the number of reads mapped to each reference sequence, and<br>
+2. normalizing to account for differences in reference sequence length.<br>
 Typically data normalization is carried out to enable comparison of taxon abundance between and 
 within samples. The result is that read counts are reported as fragments reads per kilobase,
 per million reads, or RPKM.
