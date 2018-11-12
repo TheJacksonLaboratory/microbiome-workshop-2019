@@ -197,8 +197,7 @@ done
 
 # Copy the output directory from backup
 cp -r ~/MCA/backup/mWGS/metaphlan2_profiles .
-{% endhighlight %
-}
+{% endhighlight %}
 <br>
 
 Finally, Metaphlan2 also provides a python script that can be used to merge data for different
