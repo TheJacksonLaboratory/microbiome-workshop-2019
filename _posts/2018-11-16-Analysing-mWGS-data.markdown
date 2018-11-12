@@ -12,7 +12,7 @@ During this session we will cover the fundamentals of analysing metagenomic Whol
 
 &nbsp;&nbsp;[1. An Introduction to mWGS Sequence Data](#header1) <br>
 &nbsp;&nbsp;[2. Estimating Bacterial Abundance from mWGS Data](#header2) <br>
-&nbsp;&nbsp;[2. Estimating Metabolic Pathway Abundance from mWGS Data](#header3) <br>
+&nbsp;&nbsp;[3. Estimating Metabolic Pathway Abundance from mWGS Data](#header3) <br>
 &nbsp;&nbsp;[4. Searching for Genes with Interesting Function in mWGS Data](#header4) <br>
 &nbsp;&nbsp;[5. Visualizing mWGS Data Analysis Output with R](#header5) <br>
 
