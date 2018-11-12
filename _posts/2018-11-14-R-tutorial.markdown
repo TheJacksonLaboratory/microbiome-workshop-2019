@@ -5,5 +5,5 @@ date:   2018-11-14 11:00:00
 categories: jekyll update
 ---
 
-{% post_url https://thejacksonlaboratory.github.io/r-novice-gapminder-microbiome/ %}
+[Link text]({% post_url https://thejacksonlaboratory.github.io/r-novice-gapminder-microbiome/ %})
 
