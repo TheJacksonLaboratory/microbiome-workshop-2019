@@ -1,0 +1,7 @@
+---
+layout: external
+title: "Etherpad - collaborative document"
+date:   2018-11-14 04:00:00
+categories: jekyll update
+external_url: https://pad.carpentries.org/jax-microbiome-2018
+---
