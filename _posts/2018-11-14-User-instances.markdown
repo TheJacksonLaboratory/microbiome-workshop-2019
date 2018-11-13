@@ -9,22 +9,21 @@ categories: jekyll update
 
 A remote computer (instance) on Amazon Web Services has been set up for use in training for each user. All instances are identical with the same working environment. You should be able to connect from PC, Mac or Linux. Please see below for the instructions.
 
-## User Instances
+## SSH into the instance
 
-Username              |  IP              |  Terminal                                                                       |  RStudio                                                           |  Download Files
-----------------------|------------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------|--------------------------------------------------------------------
-user 10               |  34.236.170.98   |  <a href='http://34.236.170.98:8888/terminals/1' target='_blank'>terminal</a>   |  <a href='http://34.236.170.98:8787' target='_blank'>rstudio</a>   |  <a href='http://34.236.170.98' target='_blank'>download files</a>
-
-
-** Other ways to SSH into the instances **
-
-1. Open the terminal and type the following command substituting 'ip_address' for the IP address that was assigned to you above.
+Open the terminal and type the following command substituting 'ip_address' for the IP address that was assigned to you below.
 
         $ ssh ubuntu@ip_address
-        
+
         Username: ubuntu
         Password: jgm2018
 
-****
+
+## User Instances
+
+Username  |  IP             |  Terminal                                                                      |  RStudio                                                          |  Download Files
+----------|-----------------|--------------------------------------------------------------------------------|-------------------------------------------------------------------|-------------------------------------------------------------------
+Sandeep   |  18.207.114.35  |  <a href='http://18.207.114.35:8888/terminals/1' target='_blank'>terminal</a>  |  <a href='http://18.207.114.35:8787' target='_blank'>rstudio</a>  |  <a href='http://18.207.114.35' target='_blank'>download files</a>
+Jethro    |  34.202.235.40  |  <a href='http://34.202.235.40:8888/terminals/1' target='_blank'>terminal</a>  |  <a href='http://34.202.235.40:8787' target='_blank'>rstudio</a>  |  <a href='http://34.202.235.40' target='_blank'>download files</a>
 
 
