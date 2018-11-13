@@ -24,6 +24,11 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username:
 github_username:
 
+# List of links in the navigation bar
+navbar-links:
+  Home: "https://thejacksonlaboratory.github.io/microbiome-workshop-2018/"
+  Etherpad: "https://pad.carpentries.org/jax-microbiome-2018"
+
 # Build settings
 markdown: kramdown
 theme: minima
