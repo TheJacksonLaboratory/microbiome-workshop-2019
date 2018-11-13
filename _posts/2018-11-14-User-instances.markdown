@@ -5,11 +5,11 @@ date:   2018-11-14 05:00:00
 categories: jekyll update
 ---
 
-### Instance Information
+## Instance Information
 
 A remote computer (instance) on Amazon Web Services has been set up for use in training for each user. All instances are identical with the same working environment. You should be able to connect from PC, Mac or Linux. Please see below for the instructions.
 
-### User Instances
+## User Instances
 
 Username              |  IP              |  Terminal                                                                       |  RStudio                                                           |  Download Files
 ----------------------|------------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------|--------------------------------------------------------------------
