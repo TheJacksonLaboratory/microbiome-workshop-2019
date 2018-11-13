@@ -16,8 +16,10 @@ Open the terminal and type the following command substituting 'ip_address' for t
         $ ssh ubuntu@ip_address
 
         Username: ubuntu
-        Password: jgm2018
+        Password: 
 
+### Etherpad - Collaborative document
+Here is the link to Etherpad: <a href='https://pad.carpentries.org/jax-microbiome-2018' target='_blank'>https://pad.carpentries.org/jax-microbiome-2018</a>
 
 ### User Instances
 
