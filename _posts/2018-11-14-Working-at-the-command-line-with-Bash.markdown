@@ -41,14 +41,14 @@ ubuntu@ip-172-31-60-130:~$ ls -p
 anaconda2/  local/  MCA/  R/
 {% endhighlight %}
 
-In the example above, you'll see that two commands have been entered. The first line is empty and just shows the prompt, which is indicated by the text ending in `$`. The command `ls` was input in the second line, and the output of that command is shown directly below. The next line shows `ls` being used with a **option**, `-p`. Note how the output has been modified.<br> 
+In the example above, you'll see that two commands have been entered. The first line is empty and just shows the prompt, which is indicated by the text ending in `$`. The command `ls` was input in the second line, and the output of that command is shown directly below. The next line shows `ls` being used with an **option**, `-p`. Note how the output has been modified.<br> 
 So what does `ls` do?<br>
 
 `ls` is an abbreviation for "list", and its purpose is to list the contents of a **directory**. In most operating systems, files are organized by a hierarchical directory structure. Directories are often called **folders** and are represented by a file folder in graphical operating system interfaces. Directories can contain both files and subdirectories, the latter of which may also contain additional files and subdirectories, and so on. Considering the following example in macOS:
 
 ![Directories]({{ site.baseurl }}/images/directory_example.png)  
 
-Here, we are looking at the contents of a directory/folder called "microbiome-workshop-2018" (abbreviated as "microbio...hom-2018" by the browser). This directory contains several files (e.g., "donate.md") and serveral subdirectories (e.g., "images"); it is itself contained within a **parent directory** called "Dev", which is contained in its own parent directory called "djme", and so on.<br>
+Here, we are looking at the contents of a directory/folder called "microbiome-workshop-2018" (abbreviated as "microbio...hom-2018" by the browser). This directory contains several files (e.g., "donate.md") and several subdirectories (e.g., "images"); it is itself contained within a **parent directory** called "Dev", which is contained in its own parent directory called "djme", and so on.<br>
 
 When we ran `ls` above, we showed the contents of a directory. But that was not terribly informative, because the output did not tell us whether the items listed were files or subdirectories. To get that information, we had to modify the `ls` command. By typing `-p` after `ls`, we changed the way that `ls` displays output. In this case, all of the contents were appended with a **forward slash**, `/`, which is a special character in Bash that indicates an item is a directory. Thus the purpose of the `-p` option is to append the `/` **only to directories**, so we learned that `anaconda2/`, `local/`, `MCA/`, and `R/` are all subdirectories. But subdirectories of what?<br>
 
@@ -181,7 +181,7 @@ ubuntu@ip-172-31-60-130:~/test1$ ls -p
 file1
 {% endhighlight %}
 
-`cp` and move work similarly in that they take two strings of text, called **arguments**, the source file and the destination. For example:
+`cp` and `mv` work similarly in that they take two strings of text, called **arguments**, the source file and the destination. For example:
 
  
 {% highlight bash %}
@@ -226,7 +226,7 @@ ubuntu@ip-172-31-60-130:~$ ls -p
 anaconda2/  local/  MCA/  R/
 {% endhighlight %}
 
-> Challenge 1.5: What happens when you try to remove a directory with `rm`?
+> Challenge 1.5: What happens when you try to remove a directory with `rm`?<br>
 > Challenge 1.6: What happens when you try to `rmdir` a directory that contains a file?
 
 <br>
@@ -259,9 +259,6 @@ greeting.txt
 
 Now what if you want to edit the file you just created? For this, we will use a basic [text editor][texteditor-wikipedia] called Nano. For details on how to use Nano, see the [online documentation][nano-homepage]. 
 
-{% highlight bash %}
-
-{% endhighlight %}
 
 ![NanoBash]({{ site.baseurl }}/images/Bash_lesson_nano.png)
  
@@ -425,7 +422,7 @@ As will stop the eye of Helen’s needle, for whom he comes to fight.
 Lucretias glove, wherein her needle sticks;
 {% endhighlight %}
 
-> Challenge 3.1: Create a new file called `Romeo.txt` that contains only lines from `100-0.txt` with the word "Romeo"
+> Challenge 3.1: Create a new file called `Romeo.txt` that contains only lines from `100-0.txt` with the word "Romeo"<br>
 > Challenge 3.2: How many lines, words, and characters are in `Romeo.txt`?
 
 `grep` also has an option, `-v` that will return only lines that *don't* contain the input string. For example, if I want to only return lines from `Romeo.txt` that do not contain the letter "t", I could do this:
@@ -680,18 +677,7 @@ ubuntu@ip-172-31-60-130:~/folder1$ ls -p
 file
 {% endhighlight %}
 
-
-\ — continuous character
- 
-comments #
- 
-for
-do
- 
- 
-execution of program
-./
-chmod
+> Final Challenge: Delete folder1-5 to clean up after the lesson!
  
 <br>
 <br>
