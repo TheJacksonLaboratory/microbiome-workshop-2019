@@ -226,7 +226,7 @@ ubuntu@ip-172-31-60-130:~$ ls -p
 anaconda2/  local/  MCA/  R/
 {% endhighlight %}
 
-> Challenge 1.5: What happens when you try to remove a directory with `rm`?
+> Challenge 1.5: What happens when you try to remove a directory with `rm`?<br>
 > Challenge 1.6: What happens when you try to `rmdir` a directory that contains a file?
 
 <br>
@@ -422,7 +422,7 @@ As will stop the eye of Helen’s needle, for whom he comes to fight.
 Lucretias glove, wherein her needle sticks;
 {% endhighlight %}
 
-> Challenge 3.1: Create a new file called `Romeo.txt` that contains only lines from `100-0.txt` with the word "Romeo"
+> Challenge 3.1: Create a new file called `Romeo.txt` that contains only lines from `100-0.txt` with the word "Romeo"<br>
 > Challenge 3.2: How many lines, words, and characters are in `Romeo.txt`?
 
 `grep` also has an option, `-v` that will return only lines that *don't* contain the input string. For example, if I want to only return lines from `Romeo.txt` that do not contain the letter "t", I could do this:
