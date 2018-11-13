@@ -6,9 +6,14 @@ layout: default
 
   <h1 class="page-heading">Lessons</h1>
  
-  {% include nav.html %}
-
   {{ content }}
+
+  <nav class="main-nav">
+    <ul>
+      <li><a href="/" >Home</a></li>
+      <li><a href="/blog.hhtml" >Blog</a></li>
+    </ul>
+  </nav>
 
   <ul class="post-list">
     {% assign sorted-posts = site.posts | sort: 'post_date' | reverse %}
