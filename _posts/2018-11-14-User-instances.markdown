@@ -22,6 +22,9 @@ Open the terminal and type the following command substituting 'ip_address' for t
         Username: ubuntu
         Password: 
 
+Windows users
+> *Prerequisites*: You must have an SSH client. There are several free options and we will use PuTTY [[Download Putty.exe](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html)]
+
 
 ### User Instances
 
