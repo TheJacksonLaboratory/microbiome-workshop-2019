@@ -257,7 +257,7 @@ greeting.txt
 > Challenge 2.1: Create a text file called `text_file1.txt` that contains the line "Roses are red".<br>
 > Challenge 2.2: Try viewing the content of your file with the `cat` command: `cat text_file1.txt`.
 
-Now what if you want to edit the file you just created? For this, we will use a basic [text editor][texteditor-wikipedia] called Nano. For details on how to use Nano, see the [online documentation][nano-homepage]. 
+Now what if you want to edit the file you just created? For this, we will use a basic [text editor][texteditor-wikipedia] called Nano. For details on how to use Nano, see the [online documentation][nano-homepage]. One nice thing about nano is that it give you some command shortcuts right on the screen when you have it open. Note that the caret symbol (`^`) indicates that you should hold the control key while pressing the associated letter key. For example, `^X` means that you should hold control and press the `X` key.
 
 
 ![NanoBash]({{ site.baseurl }}/images/Bash_lesson_nano.png)
@@ -327,7 +327,7 @@ total 5.6M
 
 Note that the `-h` option was used with `ls` in the above example. This option makes the file size information "human readable". You can see that the file that was downloaded, `100-0.txt`, is about 5.6 megabytes. That's a big text file! Using `cat` on this file is not very useful to inspect its contents (give it a try and you'll see).<br> 
 
-One nice option for browsing very large text files is `less` (usage example: `$ less 100-0.txt`; to exit, type the letter q). This displays one screen's worth of the file contents and allows you to scroll through. However, this is still inefficient, depending on what you want to do with the text.<br>
+One nice option for browsing very large text files is `less` (usage example: `$ less 100-0.txt`; to exit, type the letter `q`). This displays one screen's worth of the file contents and allows you to scroll through. However, this is still inefficient, depending on what you want to do with the text.<br>
 
 If you just want to check out the first few lines of text, you can try `head`:
 
@@ -497,25 +497,25 @@ ubuntu@ip-172-31-60-130:~/text_files$ cat 100-0.txt | grep -o orange | wc -w
 Text can be assigned to variables and used later in Bash. For example:
 
 {% highlight bash %}
-ubuntu@ip-172-31-60-130:~/text_files$ greeting="Hello!"
+ubuntu@ip-172-31-60-130:~/text_files$ greeting="Hello"
 ubuntu@ip-172-31-60-130:~/text_files$ echo $greeting
-Hello!
+Hello
 ubuntu@ip-172-31-60-130:~/text_files$ echo greeting
 greeting
 {% endhighlight %}
 
-In this example, we assigned the text `"Hello!"` to the variable `greeting`. Notice that to use the variable later with `echo`, we had to use the `$` character. You can use variables in combination with other input too:
+In this example, we assigned the text `"Hello"` to the variable `greeting`. Notice that to use the variable later with `echo`, we had to use the `$` character. You can use variables in combination with other input too:
 
 {% highlight bash %}
-ubuntu@ip-172-31-60-130:~/text_files$ echo $greeting World!
-Hello! World!
+ubuntu@ip-172-31-60-130:~/text_files$ echo $greeting world!
+Hello world!
 {% endhighlight %}
 
 However, whitespace matters when referencing variables:
 
 {% highlight bash %}
 ubuntu@ip-172-31-60-130:~/text_files$ echo $greeting How are you?
-Hello! How are you?
+Hello How are you?
 ubuntu@ip-172-31-60-130:~/text_files$ echo $greetingHow are you?
 are you?
 {% endhighlight %}
@@ -525,7 +525,7 @@ Notice in the first example, everything worked as expected. But not in the secon
 
 {% highlight bash %}
 ubuntu@ip-172-31-60-130:~/text_files$ echo ${greeting}How are you?
-Hello!How are you?
+HelloHow are you?
 {% endhighlight %}
 
 Because commands in Bash are text, you can store commands in variables too:
@@ -630,7 +630,9 @@ ubuntu@ip-172-31-60-130:~$ nano count_ten.sh
 There is a lot going on in that script so lets walk through it. This script contains a single FOR loop. This is a special construct for performing an iterative task. This particular FOR loop does the following:<br>
 
 1) It assigns a value to the variable `$NUM` from a list of values created by `{1..10}`. Bash knows that `{1..10}` means "create a list from 1 to 10". The first time through the loop, `$NUM` takes on the first value in the list, so the number 1. The next time through the loop, `$NUM` takes on the value 2, and so on.
+
 2) Using the current value for `$NUM`, the code between `do` and `done` is executed.
+
 3) If there are any values left in the `{1..10}` list, the `do`/`done` block will evaluate again with the next value. If the list has been completely run through, the loop finishes.
 
 We can see this in action, but to do so, we first need to indicate that `count_ten.sh` is an **executable** script. To do that, we use the `chmod` command. Don't worry too much about the details of what is going on with the `chmod` command itself--just note that change that it causes:
@@ -687,5 +689,7 @@ file
 [sc-url]: http://swcarpentry.github.io/shell-novice/
 [so-url]: https://stackoverflow.com
 [google-url]: https://www.google.com
+[nano-homepage]: https://www.nano-editor.org/dist/latest/nano.html
+
 
 
