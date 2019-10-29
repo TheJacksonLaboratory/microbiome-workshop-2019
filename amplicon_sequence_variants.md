@@ -1,7 +1,11 @@
 ---
-layout: page
-title:  "DADA2: Improving Taxonomic Resolution"
+layout: post
+
 ---
+
+## DADA2: Improving Taxonomic Resolution
+
+
 
 <br>
 
