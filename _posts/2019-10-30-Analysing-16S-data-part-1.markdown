@@ -20,6 +20,9 @@ Details of the individual session components are included below:
 &nbsp;&nbsp;[8. Amalgamating code into a pipeline script](#header8) <br>
 
 &nbsp;&nbsp;[Conclusions](#header9) <br>
+&nbsp;&nbsp;[OTUs versus exact sequence variants](#header10) <br>
+
+
 
 <br>
 <br>
@@ -428,15 +431,14 @@ computational analysis.
 <br>
 
 ----------------------------------
-# Conclusions<a name="header9"></a>
+## Conclusions<a name="header9"></a>
 
 This session provides an overview of the fundamental steps taken to process 16S gene
 sequence data from raw reads to a taxonomic abundance table that can be used for downstream
 analysis. It makes use of the freely available tools FLASh and USEARCH. However, there are many 
 other excellent tools/SOPs available online. See for example 
-[Mothur][mothur-sop], 
+[Mothur][mothur-sop] and
 [Qiime][qiime-tutorials],
-and [Tornado][tornado-tutorial]
 for further discussion of the issues surrounding 16S sequence analysis.
 
 If you have managed to maintain your script `16s_pipeline.sh` throughout this session, then you will
@@ -445,6 +447,18 @@ possible to rerun this pipeline on this and other datasets to automatically go f
 [merging fastq files](#header3b) to [generating a count matrix](#header6). Pipelines are an
 essential part of high-throughput sequence analysis. For an interesting discussion of the importance
 of reproducibility in modern biological research see [here][nbiotech-article].
+
+# OTUs versus exact sequence variants<a name="header10"></a>
+
+In this session we have focussed on the fundamental steps that are common to most 16S analysis
+methodologies. In an effort to make these steps as transparent as possible, we've also avoided
+being tied to a single user environment.
+
+One recent advance in 16S sequence analysis is the move from OTU-based analysis towards the use
+of denoising algorithms designed to correct for sequencing error. As time is limited, we have not 
+gone into this in the main session; however, you can find a bonus session on the use of DADA2 for
+denoising 16S sequence data [here]({{ site.baseurl }}{% link amplicon_sequence_variants.md %}).
+
 
 
 
