@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>User Instances</title>
+  <meta name="description" content="DADA2: Improving Taxonomic Resolution">
+
+  <link rel="stylesheet" href="/microbiome-workshop-2019/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/microbiome-workshop-2019/jekyll/update/2019/10/29/amplicon_sequence_variants.html">
+  <link rel="alternate" type="application/rss+xml" title="Introduction to Microbial Community Analysis" href="/microbiome-workshop-2019/feed.xml">
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/microbiome-workshop-2019/">Introduction to Microbial Community Analysis</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">User Instances</h1>
+    <p class="post-meta">
+      <time datetime="2019-10-28T20:00:00-04:00" itemprop="datePublished">
+        
+        Oct 29, 2019
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h2 id="dada2-improving-taxonomic-resolution">DADA2: Improving Taxonomic Resolution</h2>
+
+<p><br /></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Clustering 16S sequences into OTUs has historically served two purposes:</p>
+
+<ul>
+  <li>
+    <p>It has removed minor artifactual sequence variants due to PCR 
+amplification and sequencing errors.</p>
+  </li>
+  <li>
+    <p>It has collapsed legitimate sequence variation that exists between 
+closely related bacterial taxa.</p>
+  </li>
+</ul>
+
+<p>While the latter may not always be desirable, it stands to reason that you
+can’t distinguish between bacterial taxa whose 16S sequences vary at a rate
+that is lower than the error encountered on a particular sequencing platform.</p>
+
+<p>Recently, a number of tools have been developed with the goal of removing
+PCR and sequencing errors in 16S data (‘denoising’). Examples include 
+<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4817710/">Minimum entropy decomposition</a>, <a href="https://doi.org/10.1101/081257">UNOISE</a>, <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4927377/">DADA2</a>, and
+<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5340863/">Deblur</a>. For a recent comparison of some of these tools, see 
+<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6087418/">here</a>.</p>
+
+<p>These approaches collectively claim it is now possible to distinguish
+between sequences that differ by as little as one nucleotide. In consequence, 
+they argue that denoised sequences (variously called exact sequence variants
+(ESVs), amplicon sequence variants (ASVs), or zero-radius OTUs (ZOTUs)) <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5702726/">should
+replace conventional OTUs as the unit of measurement in 16S studies</a>.</p>
+
+<p>While the main practical session is focused on conventional OTU analysis. 
+This session contains an introduction to sequence analysis based on the
+<a href="https://benjjneb.github.io/dada2/tutorial.html">DADA2 pipeline</a>.</p>
+
+<p><br /></p>
+
+<p>  <a href="#header1">1. Fetching Data for DADA2 Analysis</a> <br />
+  <a href="#header2">2. Open DADA2 and Plot Read Quality</a> <br />
+  <a href="#header3">3. Trim and filter forward and reverse reads based on quality</a> <br />
+  <a href="#header4">4. Denoise reads with DADA2</a> <br />
+  <a href="#header5">5. Genererate amplicons and create an abundance matrix</a> <br />
+  <a href="#header6">6. Assign Taxonomy to DADA2 Amplicon Sequence Variants</a> <br /></p>
+
+<p><br /></p>
+
+<p>  <a href="#header7">Conlusions</a> <br /></p>
+
+<p><br />
+<br />
+<br /></p>
+
+<hr />
+<h1 id="1-fetching-data-for-dada2-analysis-">1. Fetching Data for DADA2 Analysis <a name="header1"></a></h1>
+
+<p>For this session we’ll use a slightly different set of input samples.
+Start by creating a run directory and copying the data to this location.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Create a working directory for this session</span>
+<span class="nb">cd</span> ~/MCA/16s/
+mkdir Session1.3
+mkdir Session1.3/fastqs
+<span class="nb">cd </span>Session1.3/fastqs
+
+<span class="c"># Copy the fastq files for three samples to this location</span>
+cp ~/additional_data/sample<span class="k">*</span> <span class="nb">.</span>
+
+<span class="c"># Note these files are gzip compressed, but it is still possible to view them</span>
+<span class="c"># using the linux pipe.</span>
+zcat sample1_trimmed.fastq.1.gz | head <span class="nt">-4</span></code></pre></figure>
+
+<p><br />
+<br /></p>
+
+<hr />
+<h1 id="2-open-dada2-and-plot-read-quality-">2. Open DADA2 and Plot Read Quality <a name="header2"></a></h1>
+
+<p>As the DADA2 package is written entirely in R, most of this session will be
+carried out in RStudio.</p>
+
+<p>Nagivate to your RStudio session and open a new R script.</p>
+
+<p><img src="/microbiome-workshop-2019/images/new_rscript.png" alt="RStudio" /></p>
+
+<p>Remember, you can write (and comment!) code in your new R script then run it via
+the R terminal, either by copying and pasting it across, or by highlighting 
+it and selecting the <code class="highlighter-rouge">Run</code> icon in the top-right side of your script window.</p>
+
+<p><img src="/microbiome-workshop-2019/images/rstudio_run.png" alt="RStudio" /></p>
+
+<p><br /></p>
+
+<p>Having opened RStudio, set your working directory to be the location of
+the run directory created in step 1.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Find out which working directory R is running in? </span><span class="w">
+</span><span class="n">getwd</span><span class="p">()</span><span class="w">
+
+</span><span class="c1"># Set your working directory and check the contents</span><span class="w">
+</span><span class="n">setwd</span><span class="p">(</span><span class="s1">'~/MCA/16s/Session1.3'</span><span class="p">)</span><span class="w">
+</span><span class="n">list.files</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span><span class="w">
+</span><span class="n">list.files</span><span class="p">(</span><span class="s1">'./fastqs'</span><span class="p">)</span></code></pre></figure>
+
+<p>Note that the fastq files have been trimmed to remove PCR and sequencing primers.
+However, they have not been trimmed to remove low quality sequences at the 3’
+end of reads. We will use the DADA2 function <code class="highlighter-rouge">plotQualityProfile()</code> to visualize
+the distribution in quality at each base in the forward and reverse reads from
+the first sample.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Create avectors in R containing details of forward and reverse reads</span><span class="w">
+</span><span class="n">fastq1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sort</span><span class="p">(</span><span class="n">list.files</span><span class="p">(</span><span class="s1">'fastqs'</span><span class="p">,</span><span class="w"> </span><span class="n">pattern</span><span class="o">=</span><span class="s1">'.fastq.1.gz'</span><span class="p">,</span><span class="w"> </span><span class="n">full.names</span><span class="o">=</span><span class="nb">T</span><span class="p">))</span><span class="w">
+</span><span class="n">fastq2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sort</span><span class="p">(</span><span class="n">list.files</span><span class="p">(</span><span class="s1">'fastqs'</span><span class="p">,</span><span class="w"> </span><span class="n">pattern</span><span class="o">=</span><span class="s1">'.fastq.2.gz'</span><span class="p">,</span><span class="w"> </span><span class="n">full.names</span><span class="o">=</span><span class="nb">T</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># Plot the read quality distribution for each sample pair</span><span class="w">
+</span><span class="n">plotQualityProfile</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">fastq1</span><span class="p">,</span><span class="w"> </span><span class="n">fastq2</span><span class="p">))</span></code></pre></figure>
+
+<p><img src="/microbiome-workshop-2019/images/dada2_quality_plot.png" alt="RStudio" /></p>
+
+<p>In this plot lines show the mean (green), median (orange) and 25th/75th 
+percentiles (dashed) of the quality score at each base position in the forward
+and reverse reads.</p>
+
+<hr />
+<h1 id="a-side-note-on-handling-data-with-r">A side note on handling data with R</h1>
+
+<p>When working on the bash command line, we have tended to use for loops to run 
+the same command for multiple samples. R is not optimised for running for loops
+and it takes a fundamentally different approach. For further discussion of why 
+this is have a look at the <a href="https://towardsdatascience.com/dealing-with-apply-functions-in-r-ea99d3f49a71">family of apply functions in R</a>, as well as the
+fundamentals of the <a href="https://www.jstatsoft.org/article/view/v040i01">split-apply-combine stragegy</a>.</p>
+
+<p>For the purposes of this practical session note that, rather than using a for loop
+to run <code class="highlighter-rouge">plotQualityProfile()</code> above, we passed all the files to the function as a
+single character vector. This is typical of how R deals with repetitive tasks.</p>
+
+<p><br />
+<br /></p>
+
+<hr />
+<h1 id="3-trim-and-filter-forward-and-reverse-reads-based-on-quality">3. Trim and filter forward and reverse reads based on quality<a name="header3"></a></h1>
+
+<p>The first step in processing reads with DADA2 is to remove poor quality sequence.
+In our main 16S analysis session this step wasn’t performed. Instead we were relying 
+on the FLASh assembler and downstream OTU calling to account for low quality sequence.</p>
+
+<p>Similar to our bash code, it’s necessary to define the names of input and output
+files before running the filtering step.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Create a subdirectory from within R to contain quality trimmed sequences</span><span class="w">
+</span><span class="n">dir.create</span><span class="p">(</span><span class="s1">'fastqs_trimmed'</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># This subdirectory now appears in your working directory</span><span class="w">
+</span><span class="n">list.files</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span><span class="w">
+</span><span class="n">list.files</span><span class="p">(</span><span class="s1">'./fastqs_trimmed'</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Fetch a list of sample names from the list of forward reads</span><span class="w">
+</span><span class="n">sample.names</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sapply</span><span class="p">(</span><span class="n">strsplit</span><span class="p">(</span><span class="n">basename</span><span class="p">(</span><span class="n">fastq1</span><span class="p">),</span><span class="w"> </span><span class="s1">'_'</span><span class="p">),</span><span class="w"> </span><span class="n">`[`</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Create vectors of output filenames for both forward and reverse reads</span><span class="w">
+</span><span class="n">fastq1.filtered</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="s1">'fastqs_trimmed'</span><span class="p">,</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="n">sample.names</span><span class="p">,</span><span class="w"> </span><span class="s1">'.fastq.1.gz'</span><span class="p">))</span><span class="w">
+</span><span class="n">fastq2.filtered</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">file.path</span><span class="p">(</span><span class="s1">'fastqs_trimmed'</span><span class="p">,</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="n">sample.names</span><span class="p">,</span><span class="w"> </span><span class="s1">'.fastq.2.gz'</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># Run quality trimming and filtering in DADA2</span><span class="w">
+</span><span class="n">out</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">filterAndTrim</span><span class="p">(</span><span class="n">fwd</span><span class="o">=</span><span class="n">fastq1</span><span class="p">,</span><span class="w"> </span><span class="n">filt</span><span class="o">=</span><span class="n">fastq1.filtered</span><span class="p">,</span><span class="w"> 
+       		     </span><span class="n">rev</span><span class="o">=</span><span class="n">fastq2</span><span class="p">,</span><span class="w"> </span><span class="n">filt.rev</span><span class="o">=</span><span class="n">fastq2.filtered</span><span class="p">,</span><span class="w">
+                     </span><span class="n">truncLen</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">260</span><span class="p">,</span><span class="w"> </span><span class="m">260</span><span class="p">),</span><span class="w"> 
+		     </span><span class="n">maxEE</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w">
+                     </span><span class="n">multithread</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+
+</span><span class="n">list.files</span><span class="p">(</span><span class="s1">'./fastqs_trimmed'</span><span class="p">)</span><span class="w">
+</span><span class="n">print</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></code></pre></figure>
+
+<p>In the code above, we’ve set the minimum permissible truncated length of for a
+sequence to be 260bp for both forward and reverse reads. These were originally
+2x300bp reads generated on the Illumina MiSeq platform to span the (~500bp) V1-V3
+region. However, 20bp has been trimmed from the 5’ end of each read during adapter
+removal. This minimum lengths used above have therefore been selected to ensure (minimal!) 
+overlap between reads during amplicon assembly.</p>
+
+<p>The histogram below shows a typical distribution in the length of amplicons generated 
+from a human gut microbiome study.</p>
+
+<p><img src="/microbiome-workshop-2019/images/histogram.png" alt="RStudio" /></p>
+
+<blockquote>
+  <p>What biases may be introduced by setting a stringent <code class="highlighter-rouge">truncLen</code> value?</p>
+</blockquote>
+
+<blockquote>
+  <p>For more information on the arguments supplied in the quality trimming and filtering
+step type <code class="highlighter-rouge">?filterAndTrim</code> into the R terminal.</p>
+</blockquote>
+
+<blockquote>
+  <p>Try altering <code class="highlighter-rouge">truncLen</code> and replacing <code class="highlighter-rouge">maxEE</code> with a minimum quality score (<code class="highlighter-rouge">minQ</code>)
+to see what effect these parameters have on the number of reads remaining after filtering.</p>
+</blockquote>
+
+<p><br />
+<br /></p>
+
+<hr />
+<h1 id="4-denoise-reads-with-dada2">4. Denoise reads with DADA2<a name="header4"></a></h1>
+
+<p>Denoising  in DADA2 is a two step process, first it models the expected error the 
+forward and reverse reads, then it removes this error to create a ‘corrected’ read set.
+For further detail see the methods and supplementary material in the original 
+<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4927377/">DADA2 publication</a>.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Model error in forward and reverse reads</span><span class="w">
+</span><span class="n">error1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">learnErrors</span><span class="p">(</span><span class="n">fastq1.filtered</span><span class="p">)</span><span class="w">
+</span><span class="n">error2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">learnErrors</span><span class="p">(</span><span class="n">fastq2.filtered</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Remove exact replicate sequences</span><span class="w">
+</span><span class="n">dereplicated1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">derepFastq</span><span class="p">(</span><span class="n">fastq1.filtered</span><span class="p">,</span><span class="w"> </span><span class="n">verbose</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+</span><span class="nf">names</span><span class="p">(</span><span class="n">dereplicated1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sample.names</span><span class="w">
+</span><span class="n">dereplicated2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">derepFastq</span><span class="p">(</span><span class="n">fastq2.filtered</span><span class="p">,</span><span class="w"> </span><span class="n">verbose</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+</span><span class="nf">names</span><span class="p">(</span><span class="n">dereplicated2</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sample.names</span><span class="w">
+
+</span><span class="c1"># Then apply the DADA2 denoising algorithm</span><span class="w">
+</span><span class="n">corrected1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dada</span><span class="p">(</span><span class="n">dereplicated1</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="o">=</span><span class="n">error1</span><span class="p">)</span><span class="w">
+</span><span class="n">corrected2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dada</span><span class="p">(</span><span class="n">dereplicated2</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="o">=</span><span class="n">error2</span><span class="p">)</span><span class="w">
+
+</span><span class="n">corrected1</span><span class="w">
+</span><span class="n">corrected2</span></code></pre></figure>
+
+<p><br />
+<br /></p>
+
+<hr />
+<h1 id="5-genererate-amplicons-and-create-an-abundance-matrix">5. Genererate amplicons and create an abundance matrix<a name="header5"></a></h1>
+
+<p>Having corrected sequencing errors in forward and reverse reads, the remaining
+steps are to merge read pairs into amplicons, remove chimeras, and to calculate
+the abundance of each amplicon in each sample.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Combine the forward and reverse read into a single set of amplicons</span><span class="w">
+</span><span class="n">amplicons</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mergePairs</span><span class="p">(</span><span class="n">dadaF</span><span class="o">=</span><span class="n">corrected1</span><span class="p">,</span><span class="w"> </span><span class="n">derepF</span><span class="o">=</span><span class="n">dereplicated1</span><span class="p">,</span><span class="w">
+                        </span><span class="n">dadaR</span><span class="o">=</span><span class="n">corrected2</span><span class="p">,</span><span class="w"> </span><span class="n">derepR</span><span class="o">=</span><span class="n">dereplicated2</span><span class="p">,</span><span class="w">
+                        </span><span class="n">verbose</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Generate a count matrix containing the counts for each denoised sequence</span><span class="w">
+</span><span class="n">sequence.tab</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">makeSequenceTable</span><span class="p">(</span><span class="n">amplicons</span><span class="p">,</span><span class="w"> </span><span class="n">orderBy</span><span class="o">=</span><span class="s1">'abundance'</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># The rows of this matrix are the samples</span><span class="w">
+</span><span class="n">rownames</span><span class="p">(</span><span class="n">sequence.tab</span><span class="p">)</span><span class="w">
+</span><span class="c1"># The columns are the sequences</span><span class="w">
+</span><span class="n">colnames</span><span class="p">(</span><span class="n">sequence.tab</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Remove chimeras directly from the count.matrix</span><span class="w">
+</span><span class="n">sequence.tab.nochimeras</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">removeBimeraDenovo</span><span class="p">(</span><span class="n">sequence.tab</span><span class="p">,</span><span class="w"> </span><span class="n">verbose</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Finally, it's possible to write the denoised amplicons to a fasta file</span><span class="w">
+</span><span class="n">uniquesToFasta</span><span class="p">(</span><span class="n">getUniques</span><span class="p">(</span><span class="n">sequence.tab.nochimeras</span><span class="p">),</span><span class="w"> </span><span class="s1">'dada2_esvs.fasta'</span><span class="p">)</span></code></pre></figure>
+
+<blockquote>
+  <p>How many unique amplicons were created using the DADA2 denoising pipeline?</p>
+</blockquote>
+
+<p><br />
+<br /></p>
+
+<hr />
+<h1 id="6-assign-taxonomy-to-dada2-amplicon-sequence-variants">6. Assign Taxonomy to DADA2 Amplicon Sequence Variants<a name="header6"></a></h1>
+
+<p>Within the DADA2 pipeline, it is also possible to assign taxonomy to denoised
+sequences via a two step process. The first step <code class="highlighter-rouge">assignTaxonomy()</code> is a wrapper
+for the method introduced in 
+<a href="/microbiome-workshop-2019/jekyll/update/2019/10/30/Analysing-16S-data-part-1.html">Section 7</a>
+of our previous 16 analysis session. As this method only returns classifications
+to genus level. The second step <code class="highlighter-rouge">addSpecies()</code> attempts to find exact matches
+for each sequence in a curated reference database.</p>
+
+<p>First, it’s necessary to retrieve the reference databases for taxonomic and species
+assignment. A selection of formatted reference databases can be found <a href="https://benjjneb.github.io/dada2/training.html">here</a>.
+In this example we will begin by downloading reference databases derived from the 
+NCBI 16S database and the RDP database.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># In your bash terminal cd into the current working directory</span>
+<span class="nb">cd</span> ~/MCA/16s/Session1.3
+
+<span class="c"># Download the database used to train the RDP classifier</span>
+curl <span class="nt">-O</span> <span class="nt">-J</span> <span class="nt">-L</span> https://zenodo.org/record/2541239/files/RefSeq-RDP16S_v2_May2018.fa.gz?download<span class="o">=</span>1
+<span class="c"># Download the database used for exact sequence matching</span>
+curl <span class="nt">-O</span> <span class="nt">-J</span> <span class="nt">-L</span> https://zenodo.org/record/2658728/files/RefSeq-RDP_dada2_assignment_species.fa.gz?download<span class="o">=</span>1
+
+<span class="nb">ls</span> <span class="nt">-l</span></code></pre></figure>
+
+<p>Having downloaded the reference databases, return to R to perform taxonomic assignment.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Assign taxonomy to genus level</span><span class="w">
+</span><span class="n">taxonomy.table</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">assignTaxonomy</span><span class="p">(</span><span class="n">seqs</span><span class="o">=</span><span class="n">sequence.tab.nochimeras</span><span class="p">,</span><span class="w">
+                       </span><span class="n">refFasta</span><span class="o">=</span><span class="s2">"RefSeq-RDP16S_v2_May2018.fa.gz"</span><span class="p">,</span><span class="w">
+                       </span><span class="n">multithread</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+</span><span class="c1"># Assign species via exact matching</span><span class="w">
+</span><span class="n">taxonomy.table</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">addSpecies</span><span class="p">(</span><span class="n">taxtab</span><span class="o">=</span><span class="n">taxonomy.table</span><span class="p">,</span><span class="w"> 
+                             </span><span class="n">refFasta</span><span class="o">=</span><span class="s2">"RefSeq-RDP_dada2_assignment_species.fa.gz"</span><span class="p">,</span><span class="w"> 
+                             </span><span class="n">verbose</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># As row names in the resulting table are the sequences</span><span class="w">
+</span><span class="c1"># remove them before viewing.</span><span class="w">
+</span><span class="n">taxa.print</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">taxa</span><span class="w">
+</span><span class="n">row.names</span><span class="p">(</span><span class="n">taxa.print</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
+</span><span class="n">taxa.print</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">taxa.print</span><span class="p">)</span><span class="w">
+</span><span class="n">View</span><span class="p">(</span><span class="n">taxa.print</span><span class="p">)</span></code></pre></figure>
+
+<p><br /></p>
+
+<p>Alternatively, it is possible to assign taxonomy to the denoised amplicon 
+sequences by using the NCBI nucleotide BLAST tool. This can be done by copying and
+pasting individual sequences into the <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&amp;PAGE_TYPE=BlastSearch&amp;LINK_LOC=blasthome">online BLAST portal</a>. Then selecting 
+the highly-curated NCBI 16S rRNA database as a reference.</p>
+
+<p><img src="/microbiome-workshop-2019/images/blast_image.png" alt="BLAST" /></p>
+
+<blockquote>
+  <p>Try running BLAST for the most and least abundant ASVs in your output fasta file.</p>
+</blockquote>
+
+<blockquote>
+  <p>Try running BLAST against the NCBI Nucleotide collection database, rather than the
+16S rRNA database.</p>
+</blockquote>
+
+<p>Note that it’s  also possible to install BLAST locally and run it from  the
+<a href="https://www.ncbi.nlm.nih.gov/books/NBK279671/">commandline</a>. However, if you do this, for taxonomic assignment, 
+<a href="https://academic.oup.com/bioinformatics/article/35/9/1613/5106166">be very careful about the arguments you provide</a>.</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="conclusions">Conclusions<a name="header7"></a></h2>
+
+<p>DADA2 and other denoising algorithms provide a different approach to dealing with 
+sequencing error compared to more traditional OTU-based analysis.</p>
+
+<p>In OTU analysis sequencing error is removed by collapsing sequences at an identity
+threshold that is (hopefully!) higher than the error rate encountered on a particular 
+sequencing platform. DADA2 models this error before removing it from each (unique) 
+sequence.</p>
+
+<p>Both approaches have strengths and weaknesses. Proponents of denoising
+algorithms argue that they have two major theoretical advantages:</p>
+
+<ul>
+  <li>
+    <p>First, they remove the need to collapse legitimate sequence variation that may occur 
+between closely related taxa. This enables finer taxonomic resolution in 16S studies.</p>
+  </li>
+  <li>
+    <p>Second, the ability to identify exact sequences means sequences can be
+compared across studies. By contrast, the manner in which OTUs are generated means they
+are  unique to the study in which they are derived.</p>
+  </li>
+</ul>
+
+<p>While these are significant advantages, biological judgement is required when 
+interpreting denoised amplicon data. For example, how many of the denoised amplicon 
+sequences could confidently be classified to species level? To what extent does this 
+depend on the completness and accuracy of the 16S rRNA reference databases?</p>
+
+<p>Another interesting point to consider is that the three samples analyzed in this session were
+drawn from a mock community made up of 36 bacterial species. The list of included 
+species is given below:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Actinomyces naeslundii MG-1</td>
+      <td>Akkermansia muciniphila</td>
+      <td>Bacteroides caccae</td>
+    </tr>
+    <tr>
+      <td>Bacteroides vulgatus</td>
+      <td>Bifidobacterium dentium</td>
+      <td>Bifidobacterium longum subsp. infantis</td>
+    </tr>
+    <tr>
+      <td>Corynebacterium accolens</td>
+      <td>Corynebacterium amycolatum</td>
+      <td>Corynebacterium matruchotti</td>
+    </tr>
+    <tr>
+      <td>Enterococcus faecalis</td>
+      <td>Escherichia coli</td>
+      <td>Eubacterium brachy</td>
+    </tr>
+    <tr>
+      <td>Faecalibacterium prausnitzii</td>
+      <td>Fusobacterium nucleatum subsp. nucleatum</td>
+      <td>Gardnerella vaginalis</td>
+    </tr>
+    <tr>
+      <td>Lactobacillus crispatus</td>
+      <td>Lactobacillus gasseri</td>
+      <td>Lactobacillus iners</td>
+    </tr>
+    <tr>
+      <td>Lactobacillus jensenii</td>
+      <td>Lautropia mirabilis</td>
+      <td>Moraxella catarrhalis</td>
+    </tr>
+    <tr>
+      <td>Porphyromonas gingivalis</td>
+      <td>Prevotella melaninogenica</td>
+      <td>Prevotella nigrescens</td>
+    </tr>
+    <tr>
+      <td>Prevotella oralis</td>
+      <td>Propionibacterium acnes</td>
+      <td>Rothia dentocariosa</td>
+    </tr>
+    <tr>
+      <td>Ruminococcus lactaris</td>
+      <td>Staphylococcus aureus subsp. aureus</td>
+      <td>Streptococcus agalactiae</td>
+    </tr>
+    <tr>
+      <td>Streptococcus mutans</td>
+      <td>Streptococcus pneumoniae</td>
+      <td>Streptococcus sanguinis</td>
+    </tr>
+    <tr>
+      <td>Tannerella forsythia</td>
+      <td>Treponema denticola</td>
+      <td>Veillonella parvula</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+<blockquote>
+  <p>How many ASVs were generated by DADA2 compared to the number of species in this community?</p>
+</blockquote>
+
+<blockquote>
+  <p>How many of the species above were identified by the different taxonomic classification approaches?</p>
+</blockquote>
+
+<blockquote>
+  <p>What happens when you run these three samples through the OTU pipeline introduced in the main session?</p>
+</blockquote>
+
+<blockquote>
+  <p>What happens when you increase the identity threshold used for OTU clustering from 97% to 99%?</p>
+</blockquote>
+
+<p><br /></p>
+
+<p>One final point to consider when interpreting ASVs is that many bacteria contain multiple copies of the
+16S gene that <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC387781/">may vary in their sequence composition</a>. The image below shows the 
+observed (left) and predicted (right) frequency of nucleotide substitutions occurring across the seven
+(~1500bp) 16S genes present in the genome of Escherichia coli strain K-12 subst. MG1655. In total five of these 
+seven 16S genes are unique, while the remaining two are identical.</p>
+
+<p><img src="/microbiome-workshop-2019/images/e_coli.png" alt="Ecoli" /></p>
+
+<blockquote>
+  <p>How many E. coli ASVs were detected by DADA2?</p>
+</blockquote>
+
+
+  </div>
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Introduction to Microbial Community Analysis</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              <h2 class="footer-heading">Practical Sessions</h2>
+            
+            </li>
+            
+            <li><a href="mailto:jethro.johnson@jax.org">jethro.johnson@jax.org</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>The Jackson Laboratory For Genomic Medicine, Oct 29th to 31st, 2019</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
