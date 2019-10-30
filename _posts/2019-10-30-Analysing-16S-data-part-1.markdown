@@ -457,7 +457,7 @@ being tied to a single user environment.
 One recent advance in 16S sequence analysis is the move from OTU-based analysis towards the use
 of denoising algorithms designed to correct for sequencing error. As time is limited, we have not 
 gone into this in the main session; however, you can find a bonus session on the use of DADA2 for
-denoising 16S sequence data [here](https://thejacksonlaboratory.github.io/microbiome-workshop-2019/amplicon_sequence_variants.html)
+denoising 16S sequence data [here](https://thejacksonlaboratory.github.io/microbiome-workshop-2019/amplicon_sequence_variants.html).
 
 
 
